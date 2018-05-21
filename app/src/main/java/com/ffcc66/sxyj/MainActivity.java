@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
         initView();
 
 
-
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -47,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tab_layoutMain = findViewById(R.id.tab_layoutMain);
         view_pagerMain = findViewById(R.id.view_pagerMain);
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setActionBar(toolbar);
 
         fragmentList.add(new BookCaseFragment());

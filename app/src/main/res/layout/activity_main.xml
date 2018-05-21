@@ -11,17 +11,16 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:textAlignment="center"
-        android:foreground="@drawable/bottom_shadow">
+        android:background="@drawable/singleline_bottom"
+        android:textAlignment="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:text="追书"/>
+            android:text="书架"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
     </android.widget.Toolbar>
 
@@ -38,7 +37,7 @@
         android:id="@+id/tab_layoutMain"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/background">
+        android:background="@drawable/singleline_top">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
