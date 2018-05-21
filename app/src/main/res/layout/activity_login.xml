@@ -109,7 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="忘记密码"
+            android:background="@drawable/login_textview_ripple"
             android:textColor="@color/black"
+            android:clickable="true"
             android:textSize="18sp" />
 
         <TextView
@@ -122,7 +124,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="注册账号"
+            android:background="@drawable/login_textview_ripple"
             android:textColor="@color/black"
+            android:clickable="true"
             android:textSize="18sp" />
     </LinearLayout>
 

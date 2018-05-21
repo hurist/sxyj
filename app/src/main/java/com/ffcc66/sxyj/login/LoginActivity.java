@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,11 +34,12 @@ import java.util.Map;
 
 import okhttp3.Call;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText etUsername, etPassword;
     private Button btnLogin;
     private Dialog logindialog;
+    private TextView tvForgetPassword, tvRegister;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {      //接收其他子线程的消息
@@ -67,64 +69,77 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initView();
+
+    }
+
+    private void initView() {
+
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        tvForgetPassword = findViewById(R.id.tvForgetPassword);
+        tvRegister = findViewById(R.id.tvRegister);
+    }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
 
-                logindialog = LoadingDialogUtils.createLoadingDialog(LoginActivity.this,"正在登陆");
+            case R.id.btnLogin:
+                login();
+                break;
 
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
+        }
+    }
 
-                HashMap<String,String> loginparams = new HashMap<String,String>();
-                loginparams.put("username",username);
-                loginparams.put("password",password);
+    private void login() {
+        logindialog = LoadingDialogUtils.createLoadingDialog(LoginActivity.this,"正在登陆");
 
-                OkHttpUtils.post()
-                        .url("http://192.168.137.1:8080/SXYJServer/LoginServlet")
-                        .params(loginparams)
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+
+        HashMap<String,String> loginparams = new HashMap<String,String>();
+        loginparams.put("username",username);
+        loginparams.put("password",password);
+
+        OkHttpUtils.post()
+                .url("http://192.168.137.1:8080/SXYJServer/LoginServlet")
+                .params(loginparams)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Message msg = new Message();
+                        msg.what = 2;
+                        mHandler.sendMessage(msg);
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        if (!response.toString().equals("null")) {
+
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(response.toString());
+                                String name = jsonObject.getString("username");
                                 Message msg = new Message();
-                                msg.what = 2;
+                                msg.what = 1;
+                                msg.obj = name;
                                 mHandler.sendMessage(msg);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                            @Override
-                            public void onResponse(String response, int id) {
-                                if (!response.toString().equals("null")) {
+                        } else {
 
-                                    JSONObject jsonObject = null;
-                                    try {
-                                        jsonObject = new JSONObject(response.toString());
-                                        String name = jsonObject.getString("username");
-                                        Message msg = new Message();
-                                        msg.what = 1;
-                                        msg.obj = name;
-                                        mHandler.sendMessage(msg);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                            Message msg = new Message();
+                            msg.what = 0;
+                            mHandler.sendMessage(msg);
 
-                                } else {
-
-                                    Message msg = new Message();
-                                    msg.what = 0;
-                                    mHandler.sendMessage(msg);
-
-                                }
-                            }
-                        });
-
-            }
-        });
-
+                        }
+                    }
+                });
     }
 
 //    private void Login(final String username, final String password) {
