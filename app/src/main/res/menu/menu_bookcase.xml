@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itemScan"
+        android:orderInCategory="1"
+        android:title="扫描本地"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemBatchManagement"
+        android:orderInCategory="2"
+        android:title="批量管理"
+        app:showAsAction="never" />
+</menu>

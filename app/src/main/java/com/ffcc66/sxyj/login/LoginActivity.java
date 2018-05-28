@@ -3,42 +3,37 @@ package com.ffcc66.sxyj.login;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.ffcc66.sxyj.MainActivity;
 import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.entity.User;
+import com.ffcc66.sxyj.response.EntityResponse;
+import com.ffcc66.sxyj.util.GsonUtil;
 import com.ffcc66.sxyj.util.LoadingDialogUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etUsername, etPassword;
-    private Button btnLogin;
     private Dialog logindialog;
+    private Button btnLogin;
     private TextView tvForgetPassword, tvRegister;
 
     @SuppressLint("HandlerLeak")
@@ -53,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     break;
                 case 1:
                     LoadingDialogUtils.closeDialog(logindialog);
-                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"用户："+msg.obj.toString()+"登录成功",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     break;
                 case 2:
@@ -68,8 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        initView(); 
+        initView();
 
     }
 
@@ -80,18 +74,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = findViewById(R.id.btnLogin);
         tvForgetPassword = findViewById(R.id.tvForgetPassword);
         tvRegister = findViewById(R.id.tvRegister);
+
+        btnLogin.setOnClickListener(this);
+        etUsername.setHintTextColor(Color.WHITE);
+        etPassword.setHintTextColor(Color.WHITE);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.btnLogin:
-                login();
-                break;
-
-        }
-    }
 
     private void login() {
         logindialog = LoadingDialogUtils.createLoadingDialog(LoginActivity.this,"正在登陆");
@@ -104,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginparams.put("password",password);
 
         OkHttpUtils.post()
-                .url("http://192.168.137.1:8080/SXYJServer/LoginServlet")
+                .url("http://192.168.137.1:8080/SXYJApi/UserService/loginByUsername")
                 .params(loginparams)
                 .build()
                 .execute(new StringCallback() {
@@ -117,20 +105,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onResponse(String response, int id) {
-                        if (!response.toString().equals("null")) {
 
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(response.toString());
-                                String name = jsonObject.getString("username");
-                                Message msg = new Message();
-                                msg.what = 1;
-                                msg.obj = name;
-                                mHandler.sendMessage(msg);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        Gson gson = new Gson();
+                        EntityResponse<User> entityResponse = GsonUtil.GsonToBean(response,new TypeToken<EntityResponse<User>>(){}.getType());
 
+                        if (entityResponse.getCode().equals("ok")) {
+                            User user = (User) entityResponse.getObject();
+                            Message msg = new Message();
+                            msg.what = 1;
+                            msg.obj = user.getUsername();
+                            mHandler.sendMessage(msg);
                         } else {
 
                             Message msg = new Message();
@@ -140,6 +124,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.btnLogin:
+                login();
+                break;
+
+        }
     }
 
 //    private void Login(final String username, final String password) {

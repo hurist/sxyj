@@ -25,4 +25,16 @@
         <!-- 指定消失的动画xml  -->
     </style>
 
+    <style name="LoginEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/red</item>
+    </style>
+
+    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Light">
+        <item name="actionOverflowButtonStyle">@style/ToolBar.ActionButton.Overflow</item>
+    </style>
+
+    <style name="ToolBar.ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/bookcase_manager</item>
+    </style>
 </resources>

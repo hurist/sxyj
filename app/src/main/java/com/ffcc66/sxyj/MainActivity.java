@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         tab_layoutMain = findViewById(R.id.tab_layoutMain);
         view_pagerMain = findViewById(R.id.view_pagerMain);
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setActionBar(toolbar);
+        tab_layoutMain = findViewById(R.id.tab_layoutMain);
 
         fragmentList.add(new BookCaseFragment());
         fragmentList.add(new BookStoreFragment());
@@ -56,6 +54,23 @@ public class MainActivity extends AppCompatActivity {
 
         view_pagerMain.setAdapter(myFragmentPagerAdapter);
         view_pagerMain.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layoutMain));
+        tab_layoutMain.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                view_pagerMain.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
     }
 }
