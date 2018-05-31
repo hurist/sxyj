@@ -20,7 +20,7 @@
         android:id="@+id/tab_layoutMain"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/singleline_top"
+        android:background="@drawable/line_top"
         app:tabIndicatorColor="#00000000"
         app:tabIndicatorHeight="0dp">
 

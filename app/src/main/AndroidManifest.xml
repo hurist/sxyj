@@ -11,19 +11,22 @@
         android:roundIcon="@mipmap/my_luncher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".login.LoginActivity">
-
-        </activity>
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".bookstore.BookDetailActivity" />
+        <activity android:name=".bookstore.bookcategary.BookCategaryActivity" />
+        <activity android:name=".bookstore.BookRankingActivity" />
+        <activity android:name=".bookstore.booklist.BookListActivity" />
+        <activity android:name=".bookstore.bookcategary.BookCategaryListActivity"></activity>
     </application>
 
 </manifest>

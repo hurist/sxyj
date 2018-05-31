@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--底层使用灰色填充色-->
+    <item>
+        <shape>
+            <solid android:color="#cf8f8f8f"/>
+        </shape>
+    </item>
+
+    <!--上面一层距离底层的顶部1dp,类似marginTop,填充色为白色，这样就形成了一个带有灰色顶部边线的白色背景的图-->
+    <item android:top="1px"
+        android:bottom="1px"
+        android:left="1px"
+        android:right="1px">
+        <shape>
+            <solid android:color="#ffffff"/>
+        </shape>
+    </item>
+</layer-list>

@@ -6,6 +6,8 @@ public class Book {
     private String bookname;
     private String writer;
     private String introduction;
+    private String collectionNum;
+    private String rankingNum;
     private String readprocess;
 
     public int getCover() {
@@ -48,4 +50,19 @@ public class Book {
         this.introduction = introduction;
     }
 
+    public String getCollectionNum() {
+        return collectionNum;
+    }
+
+    public void setCollectionNum(String collectionNum) {
+        this.collectionNum = collectionNum;
+    }
+
+    public String getRankingNum() {
+        return rankingNum;
+    }
+
+    public void setRankingNum(String rankingNum) {
+        this.rankingNum = rankingNum;
+    }
 }

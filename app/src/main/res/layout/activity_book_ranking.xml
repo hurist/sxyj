@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bookstore.BookRankingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@drawable/toolbar_singleline_bottom"
+            android:navigationIcon="@drawable/ic_activity_close_white"
+            android:textAlignment="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="排行"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </android.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@drawable/lines_all"
+                android:paddingRight="1px">
+
+                <RadioGroup
+                    android:id="@+id/radioGroupRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:checked="true"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="收藏榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="热搜榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="好评榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbClick"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="点击榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbNewBook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="新书榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="9">
+
+                <ListView
+                    android:id="@+id/lvBookRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

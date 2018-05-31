@@ -3,7 +3,9 @@
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="MyDialogStyle">
@@ -30,11 +32,11 @@
         <item name="colorControlActivated">@color/red</item>
     </style>
 
-    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Light">
-        <item name="actionOverflowButtonStyle">@style/ToolBar.ActionButton.Overflow</item>
-    </style>
+    <!--<style name="MyToolbar" parent="ThemeOverlay.AppCompat.Light">-->
+        <!--<item name="actionOverflowButtonStyle">@style/ToolBar.ActionButton.Overflow</item>-->
+    <!--</style>-->
 
-    <style name="ToolBar.ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/bookcase_manager</item>
-    </style>
+    <!--<style name="ToolBar.ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
+        <!--<item name="android:src">@drawable/bookcase_manager</item>-->
+    <!--</style>-->
 </resources>

@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@drawable/toolbar_singleline_bottom"
-            android:theme="@style/MyToolbar"
             android:textAlignment="center">
 
             <TextView
@@ -54,30 +53,34 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/singleline_bottom"
+                    android:background="@drawable/line_bottom"
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/llCategary"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_booktype"/>
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/ic_booktype" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="10dp"
+                            android:text="分类"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:text="分类"/>
+                            android:textSize="16sp" />
 
                     </LinearLayout>
                     <TextView
@@ -85,27 +88,32 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:background="@color/gray"/>
+
                     <LinearLayout
+                        android:id="@+id/llRanking"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_bookrinking"/>
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/ic_bookrinking" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="10dp"
+                            android:text="排行"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:text="排行"/>
+                            android:textSize="16sp" />
 
                     </LinearLayout>
                     <TextView
@@ -113,27 +121,32 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:background="@color/gray"/>
+
                     <LinearLayout
+                        android:id="@+id/llBookList"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_booklist"/>
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/ic_booklist" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="10dp"
+                            android:text="书单"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:text="书单"/>
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -146,7 +159,7 @@
                     android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:background="@drawable/singleline_bottom"
+                    android:background="@drawable/line_bottom"
                     android:orientation="vertical">
 
                     <LinearLayout

@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvRegister = findViewById(R.id.tvRegister);
 
         btnLogin.setOnClickListener(this);
+        tvRegister.setOnClickListener(this);
+        tvForgetPassword.setOnClickListener(this);
         etUsername.setHintTextColor(Color.WHITE);
         etPassword.setHintTextColor(Color.WHITE);
     }
@@ -131,72 +133,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
 
             case R.id.btnLogin:
-                login();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                //login();
+                break;
+            case R.id.tvRegister:
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
 
         }
     }
-
-//    private void Login(final String username, final String password) {
-//
-//
-//        Thread thread=new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                try {
-//
-//                    StringBuffer stringBuilder = new StringBuffer();
-//
-//                    String str = "http://192.168.137.1:8080/SXYJServer/LoginServlet";
-//                    URL url = new URL(str);
-//                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                    httpURLConnection.setRequestMethod("POST");
-//                    httpURLConnection.setDoInput(true);                  //打开输入流，以便从服务器获取数据
-//                    httpURLConnection.setDoOutput(true);                 //打开输出流，以便向服务器提交数据
-//                    // 设置请求体的类型是文本类型,表示当前提交的是文本数据
-//                    httpURLConnection.setRequestProperty("content-type", "application/x-www-form-urlencoded");
-//
-//                    DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());//获取数据输出流输出流
-//                    String paramter = "username="+username+"&&password="+password;   //定义请求参数
-//                    dataOutputStream.writeBytes(paramter);//将参数输出到服务器
-//                    dataOutputStream.flush();
-//                    dataOutputStream.close();
-//
-//                    InputStream inputStream = httpURLConnection.getInputStream();
-//
-//                    // 读取服务器返回的数据
-//                    byte[] bytes = new byte[1024];
-//                    int length = 0;
-//                    while ((length = inputStream.read(bytes)) > 0) {
-//                        String temp = new String(bytes, 0, length);//将我们的字节流转换为String格式
-//                        stringBuilder.append(temp);
-//                    }
-//
-//                    inputStream.close();
-//
-//                    if (!stringBuilder.toString().equals("null")) {
-//
-//                        JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-//                        String name = jsonObject.getString("username");
-//                        Message msg = new Message();
-//                        msg.what = 1;
-//                        msg.obj = name;
-//                        mHandler.sendMessage(msg);
-//
-//                    } else {
-//
-//                        Message msg = new Message();
-//                        msg.what = 0;
-//                        mHandler.sendMessage(msg);
-//
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        thread.start();
-//    }
 }

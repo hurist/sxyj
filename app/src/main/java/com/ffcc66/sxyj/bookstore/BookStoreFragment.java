@@ -1,29 +1,34 @@
 package com.ffcc66.sxyj.bookstore;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
+import com.ffcc66.sxyj.bookstore.bookcategary.BookCategaryActivity;
+import com.ffcc66.sxyj.bookstore.booklist.BookListActivity;
 import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookStoreFragment extends Fragment {
+public class BookStoreFragment extends Fragment implements AdapterView.OnItemClickListener,View.OnClickListener{
 
     private Banner banner;
+    private LinearLayout llRanking,llCategary,llBookList;
     private ListViewForScrollView lvNewBookRecommend;
     private List image = new ArrayList();
     private List<Book> books = new ArrayList<>();
@@ -76,8 +81,35 @@ public class BookStoreFragment extends Fragment {
         banner.start();
 
         lvNewBookRecommend = view.findViewById(R.id.lvNewBookRecommend);
+        lvNewBookRecommend.setOnItemClickListener(this);
 
+        llRanking = view.findViewById(R.id.llRanking);
+        llRanking.setOnClickListener(this);
+        llCategary = view.findViewById(R.id.llCategary);
+        llCategary.setOnClickListener(this);
+        llBookList = view.findViewById(R.id.llBookList);
+        llBookList.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(getActivity(), BookDetailActivity.class));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llRanking:
+                startActivity(new Intent(getActivity(), BookRankingActivity.class));
+                break;
+            case R.id.llCategary:
+                startActivity(new Intent(getActivity(), BookCategaryActivity.class));
+                break;
+            case R.id.llBookList:
+                startActivity(new Intent(getActivity(), BookListActivity.class));
+                break;
+
+        }
+    }
 }
