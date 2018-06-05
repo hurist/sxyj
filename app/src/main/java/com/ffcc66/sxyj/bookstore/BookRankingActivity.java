@@ -8,35 +8,38 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.base.BaseActivity;
 import com.ffcc66.sxyj.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRankingActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
+import butterknife.BindView;
 
-    private ListView lvBookRanking;
+public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
+
+    @BindView(R.id.lvBookRanking)
+    ListView lvBookRanking;
+    @BindView(R.id.radioGroupRanking)
+    RadioGroup radioGroupRanking;
     private List<Book> books = new ArrayList<>();
-    private RadioGroup radioGroupRanking;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_ranking);
+    public int getLayoutRes() {
+        return R.layout.activity_book_ranking;
+    }
 
+    @Override
+    protected void initData() {
         initCollectionRankingData();
-        initView();
-        Log.d("Size", "onCreate: "+books.size());
         BookRankingAdapter bookRankingAdapter = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
         lvBookRanking.setAdapter(bookRankingAdapter);
     }
 
-    private void initView() {
-        lvBookRanking = findViewById(R.id.lvBookRanking);
-        radioGroupRanking = findViewById(R.id.radioGroupRanking);
+    @Override
+    protected void initListener() {
         radioGroupRanking.setOnCheckedChangeListener(this);
     }
-
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {

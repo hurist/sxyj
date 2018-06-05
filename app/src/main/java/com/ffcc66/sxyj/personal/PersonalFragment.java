@@ -14,6 +14,8 @@ import com.ffcc66.sxyj.R;
  */
 public class PersonalFragment extends Fragment {
 
+    private static final String TAG = "PersonalFragment";
+
 
     public PersonalFragment() {
         // Required empty public constructor

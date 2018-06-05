@@ -5,31 +5,26 @@ import android.os.Bundle;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
+import com.ffcc66.sxyj.base.BaseActivity;
 import com.ffcc66.sxyj.entity.TempCommend;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDetailActivity extends AppCompatActivity {
-    
-    private ListViewForScrollView lvBookCommend;
+import butterknife.BindView;
+
+public class BookDetailActivity extends BaseActivity {
+    @BindView(R.id.lvBookCommend)
+    ListViewForScrollView lvBookCommend;
     private List<TempCommend> tempCommends = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_detail);
-        
-        initView();
-        initData();
-
-        BookDetailCommendAdapter bookDetailCommendAdapter = new BookDetailCommendAdapter(BookDetailActivity.this,R.layout.activity_book_detail_commend_item,tempCommends);
-        lvBookCommend.setAdapter(bookDetailCommendAdapter);
-
-
+    public int getLayoutRes() {
+        return R.layout.activity_book_detail;
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
 
         for (int i=0; i<10; i++) {
             TempCommend tempCommend = new TempCommend();
@@ -40,11 +35,13 @@ public class BookDetailActivity extends AppCompatActivity {
             tempCommend.setNum(""+i);
             tempCommends.add(tempCommend);
         }
+        BookDetailCommendAdapter bookDetailCommendAdapter = new BookDetailCommendAdapter(BookDetailActivity.this,R.layout.activity_book_detail_commend_item,tempCommends);
+        lvBookCommend.setAdapter(bookDetailCommendAdapter);
+    }
+
+    @Override
+    protected void initListener() {
 
     }
 
-    private void initView() {
-
-        lvBookCommend = findViewById(R.id.lvBookCommend);
-    }
 }

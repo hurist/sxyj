@@ -32,22 +32,22 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tvWriter"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="作者"
-            android:textSize="17sp" />
-
-
-        <TextView
             android:id="@+id/tvReadProcess"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="阅读进度：80%"
+            android:textSize="17sp" />
+
+
+        <TextView
+            android:id="@+id/tvLastReadTime"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="上次阅读时间：2018/11/12"
             android:textSize="17sp" />
 
     </LinearLayout>

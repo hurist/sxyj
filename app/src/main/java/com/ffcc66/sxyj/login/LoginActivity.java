@@ -4,10 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +15,8 @@ import android.widget.Toast;
 
 import com.ffcc66.sxyj.MainActivity;
 import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.base.BaseActivity;
+import com.ffcc66.sxyj.entity.BookList;
 import com.ffcc66.sxyj.entity.User;
 import com.ffcc66.sxyj.response.EntityResponse;
 import com.ffcc66.sxyj.util.GsonUtil;
@@ -25,16 +26,29 @@ import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import java.util.HashMap;
+import org.litepal.crud.DataSupport;
 
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
 import okhttp3.Call;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText etUsername, etPassword;
-    private Dialog logindialog;
-    private Button btnLogin;
-    private TextView tvForgetPassword, tvRegister;
+    @BindView(R.id.etUsername)
+    EditText etUsername;
+    @BindView(R.id.etPassword)
+    EditText etPassword;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
+    @BindView(R.id.tvForgetPassword)
+    TextView tvForgetPassword;
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
+
+    Dialog logindialog;
+    private static final String TAG = "LoginActivity";
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {      //接收其他子线程的消息
@@ -60,28 +74,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        initView();
-
+    public int getLayoutRes() {
+        return R.layout.activity_login;
     }
 
-    private void initView() {
-
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        tvForgetPassword = findViewById(R.id.tvForgetPassword);
-        tvRegister = findViewById(R.id.tvRegister);
-
-        btnLogin.setOnClickListener(this);
-        tvRegister.setOnClickListener(this);
-        tvForgetPassword.setOnClickListener(this);
+    @Override
+    protected void initData() {
+        List<BookList> books = DataSupport.findAll(BookList.class);
+        Log.d(TAG, "initData: "+books.size());
+        for (BookList book: books) {
+            Log.d(TAG, "initData: "+book.getBookname());
+            Log.d(TAG, "initData: "+book.getBookpath());
+            Log.d(TAG, "initData: "+book.getLastreadtime());
+        }
         etUsername.setHintTextColor(Color.WHITE);
         etPassword.setHintTextColor(Color.WHITE);
     }
 
+    @Override
+    protected void initListener() {
+        btnLogin.setOnClickListener(this);
+        tvRegister.setOnClickListener(this);
+        tvForgetPassword.setOnClickListener(this);
+    }
 
     private void login() {
         logindialog = LoadingDialogUtils.createLoadingDialog(LoginActivity.this,"正在登陆");
@@ -134,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.btnLogin:
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                //login();
+               // login();
                 break;
             case R.id.tvRegister:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
