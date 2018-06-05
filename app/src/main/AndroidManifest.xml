@@ -55,6 +55,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".ReadActivity"></activity>
+        <activity android:name=".MarkActivity"></activity>
+
     </application>
 
 </manifest>

@@ -13,13 +13,13 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
-import com.zijie.treader.Config;
-import com.zijie.treader.util.PageFactory;
-import com.zijie.treader.view.animation.AnimationProvider;
-import com.zijie.treader.view.animation.CoverAnimation;
-import com.zijie.treader.view.animation.NoneAnimation;
-import com.zijie.treader.view.animation.SimulationAnimation;
-import com.zijie.treader.view.animation.SlideAnimation;
+import com.ffcc66.sxyj.Config;
+import com.ffcc66.sxyj.View.animation.AnimationProvider;
+import com.ffcc66.sxyj.View.animation.CoverAnimation;
+import com.ffcc66.sxyj.View.animation.NoneAnimation;
+import com.ffcc66.sxyj.View.animation.SimulationAnimation;
+import com.ffcc66.sxyj.View.animation.SlideAnimation;
+import com.ffcc66.sxyj.util.PageFactory;
 
 /**
  * Created by Administrator on 2016/8/29 0029.

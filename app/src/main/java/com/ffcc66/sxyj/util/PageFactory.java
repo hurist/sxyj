@@ -1,5 +1,6 @@
 package com.ffcc66.sxyj.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -18,12 +19,11 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.zijie.treader.Config;
-import com.zijie.treader.R;
-import com.zijie.treader.db.BookCatalogue;
-import com.zijie.treader.db.BookList;
-import com.zijie.treader.view.PageWidget;
-
+import com.ffcc66.sxyj.Config;
+import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.View.PageWidget;
+import com.ffcc66.sxyj.entity.BookCatalogue;
+import com.ffcc66.sxyj.entity.BookList;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
@@ -284,6 +284,7 @@ public class PageFactory {
         mBookPageWidget.postInvalidate();   //刷新此页
     }
 
+    @SuppressLint("WrongConstant")
     public void onDraw(Bitmap bitmap, List<String> m_lines, Boolean updateCharter) {
         if (getDirectoryList().size() > 0 && updateCharter) {
             currentCharter = getCurrentCharter();

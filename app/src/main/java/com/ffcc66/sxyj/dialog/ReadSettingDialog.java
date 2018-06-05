@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.ffcc66.sxyj.Config;
 import com.ffcc66.sxyj.R;
-import com.zijie.treader.view.BookPageWidget;
+import com.ffcc66.sxyj.View.BookPageWidget;
 
 import java.text.DecimalFormat;
 

@@ -5,6 +5,8 @@ import android.os.Environment;
 
 //import com.zijie.treader.util.PageFactory;
 
+import com.ffcc66.sxyj.util.PageFactory;
+
 import org.litepal.LitePalApplication;
 
 import java.io.File;
@@ -39,8 +41,8 @@ public class AppContext extends LitePalApplication {
         applicationContext = getApplicationContext();
 
         LitePalApplication.initialize(this);
-     // 暂时  Config.createConfig(this);
-     // 暂时  PageFactory.createPageFactory(this);
+       Config.createConfig(this);
+       PageFactory.createPageFactory(this);
 
         initialEnv();
     }

@@ -10,28 +10,28 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.zijie.treader.adapter.MyPagerAdapter;
-import com.zijie.treader.base.BaseActivity;
-import com.zijie.treader.db.BookCatalogue;
-import com.zijie.treader.util.FileUtils;
-import com.zijie.treader.util.PageFactory;
+import com.ffcc66.sxyj.adapter.MyPagerAdapter;
+import com.ffcc66.sxyj.base.BaseActivity;
+import com.ffcc66.sxyj.entity.BookCatalogue;
+import com.ffcc66.sxyj.util.FileUtils;
+import com.ffcc66.sxyj.util.PageFactory;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Administrator on 2016/1/6.
  */
 public class MarkActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.appbar)
+    @BindView(R.id.appbar)
     AppBarLayout appbar;
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     PagerSlidingTabStrip tabs;
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     ViewPager pager;
 
 //    @Bind(R.id.lv_catalogue)

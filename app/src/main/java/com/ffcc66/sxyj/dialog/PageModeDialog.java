@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.ffcc66.sxyj.Config;
 import com.ffcc66.sxyj.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,13 +21,13 @@ import butterknife.OnClick;
  */
 public class PageModeDialog extends Dialog {
 
-    @Bind(R.id.tv_simulation)
+    @BindView(R.id.tv_simulation)
     TextView tv_simulation;
-    @Bind(R.id.tv_cover)
+    @BindView(R.id.tv_cover)
     TextView tv_cover;
-    @Bind(R.id.tv_slide)
+    @BindView(R.id.tv_slide)
     TextView tv_slide;
-    @Bind(R.id.tv_none)
+    @BindView(R.id.tv_none)
     TextView tv_none;
 
     private Config config;

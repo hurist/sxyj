@@ -42,14 +42,6 @@ import com.ffcc66.sxyj.entity.BookList;
 import com.ffcc66.sxyj.entity.BookMarks;
 import com.ffcc66.sxyj.util.BrightnessUtil;
 import com.ffcc66.sxyj.util.PageFactory;
-//import com.zijie.treader.base.BaseActivity;
-//import com.zijie.treader.db.BookList;
-//import com.zijie.treader.db.BookMarks;
-//import com.zijie.treader.dialog.PageModeDialog;
-//import com.zijie.treader.dialog.SettingDialog;
-//import com.zijie.treader.util.BrightnessUtil;
-//import com.zijie.treader.util.PageFactory;
-//import com.zijie.treader.view.PageWidget;
 
 import org.litepal.crud.DataSupport;
 
@@ -62,9 +54,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-//import butterknife.Bind;
-//import butterknife.OnClick;
-
 /**
  * Created by Administrator on 2016/7/15 0015.
  */
@@ -76,7 +65,7 @@ public class ReadActivity extends BaseActivity {
     @BindView(R.id.bookpage)
     PageWidget bookpage;        //小说的实际显示View
     @BindView(R.id.tv_progress)
-TextView tv_progress;
+    TextView tv_progress;
     @BindView(R.id.rl_progress)
     RelativeLayout rl_progress;
     @BindView(R.id.tv_pre)
