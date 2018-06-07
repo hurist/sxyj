@@ -14,6 +14,9 @@ import com.ffcc66.sxyj.entity.BookCatalogue;
 
 import java.util.List;
 
+/**
+ * 图书目录列表适配器
+ */
 public class CatalogueAdapter extends BaseAdapter {
     private Context mContext;
     private List<BookCatalogue> bookCatalogueList;

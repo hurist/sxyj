@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.bookstore;
+package com.ffcc66.sxyj.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,6 +15,9 @@ import com.ffcc66.sxyj.entity.Book;
 
 import java.util.List;
 
+/**
+ * 书城首页图书列表页适配器adapter
+ */
 public class BookStoreAdapter extends ArrayAdapter {
 
     private int resourceId;

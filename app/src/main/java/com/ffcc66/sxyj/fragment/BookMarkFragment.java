@@ -23,7 +23,7 @@ import butterknife.BindView;
 
 
 /**
- * Created by Administrator on 2016/8/31 0031.
+ * 书签fragment
  */
 public class BookMarkFragment extends BaseFragment {
     public static final String ARGUMENT = "argument";

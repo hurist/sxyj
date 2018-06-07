@@ -1,11 +1,9 @@
-package com.ffcc66.sxyj.bookstore;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+package com.ffcc66.sxyj.activity;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
 import com.ffcc66.sxyj.base.BaseActivity;
+import com.ffcc66.sxyj.adapter.BookDetailCommendAdapter;
 import com.ffcc66.sxyj.entity.TempCommend;
 
 import java.util.ArrayList;
@@ -13,6 +11,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 图书详情页activity
+ */
 public class BookDetailActivity extends BaseActivity {
     @BindView(R.id.lvBookCommend)
     ListViewForScrollView lvBookCommend;

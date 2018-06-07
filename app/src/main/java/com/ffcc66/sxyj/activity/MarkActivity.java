@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj;
+package com.ffcc66.sxyj.activity;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,7 +10,9 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.ffcc66.sxyj.adapter.MyPagerAdapter;
+import com.ffcc66.sxyj.Config;
+import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.adapter.CategaryAndMarkViewpagerAdapter;
 import com.ffcc66.sxyj.base.BaseActivity;
 import com.ffcc66.sxyj.entity.BookCatalogue;
 import com.ffcc66.sxyj.util.FileUtils;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 /**
- * Created by Administrator on 2016/1/6.
+ * 书签和目录activity
  */
 public class MarkActivity extends BaseActivity {
 
@@ -69,7 +71,7 @@ public class MarkActivity extends BaseActivity {
         }
 
         setTabsValue();
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),pageFactory.getBookPath()));
+        pager.setAdapter(new CategaryAndMarkViewpagerAdapter(getSupportFragmentManager(),pageFactory.getBookPath()));
         tabs.setViewPager(pager);
     }
 

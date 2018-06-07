@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2016/7/26 0026.
+ * 设置dialog
  */
 public class SettingDialog extends Dialog {
 

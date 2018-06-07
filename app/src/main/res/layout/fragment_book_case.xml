@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.ffcc66.sxyj.bookcase.BookCaseFragment">
+    tools:context="com.ffcc66.sxyj.fragment.BookCaseFragment">
 
 
 
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <android.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbarBookCase"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@drawable/toolbar_singleline_bottom"

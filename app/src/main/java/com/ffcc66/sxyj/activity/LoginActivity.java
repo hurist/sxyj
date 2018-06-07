@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.login;
+package com.ffcc66.sxyj.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -34,6 +34,9 @@ import java.util.List;
 import butterknife.BindView;
 import okhttp3.Call;
 
+/**
+ * 登录Activity
+ */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.etUsername)

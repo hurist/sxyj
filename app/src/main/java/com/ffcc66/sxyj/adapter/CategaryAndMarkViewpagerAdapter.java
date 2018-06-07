@@ -11,15 +11,15 @@ import com.ffcc66.sxyj.fragment.BookMarkFragment;
 import com.ffcc66.sxyj.fragment.CatalogFragment;
 
 /**
- * Created by Administrator on 2016/1/12.
+ * 书签目录viewpager适配器
  */
-public class MyPagerAdapter extends FragmentPagerAdapter {
+public class CategaryAndMarkViewpagerAdapter extends FragmentPagerAdapter {
     private CatalogFragment catalogueFragment;
     private BookMarkFragment bookMarkFragment;
     private String bookPath;
     private final String[] titles = { "目录", "书签" };
 
-    public MyPagerAdapter(FragmentManager fm, String bookPath) {
+    public CategaryAndMarkViewpagerAdapter(FragmentManager fm, String bookPath) {
         super(fm);
         this.bookPath = bookPath;
     }

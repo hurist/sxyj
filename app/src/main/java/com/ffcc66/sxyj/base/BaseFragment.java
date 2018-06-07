@@ -2,11 +2,14 @@ package com.ffcc66.sxyj.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -14,6 +17,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
+    protected boolean isVisible;//标记当前Fragment是否被用户可见
     private View rootView;
     /**
      * 初始化布局
@@ -29,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutRes(), container, false);
         rootView = view;
+        Log.d(TAG, "onCreateView: ");
         // 初始化View注入
         ButterKnife.bind(this,view);
         initData(view);
@@ -45,4 +50,29 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroyView();
         //ButterKnife.unbind(this);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()){//判断用户是否可见当前Fragment
+            isVisible=true;
+            onVisible();
+        }else{
+            isVisible=false;
+            onInvisible();
+        }
+    }
+
+    private void onVisible(){
+        LazyLoad();//只有在用户可见的情况下我们才去加载数据
+    }
+
+    private void onInvisible(){//用户不可见的情况下不去加载任何的数据
+
+    }
+
+    protected void LazyLoad() {
+
+    };  //LazyLoad
+
 }

@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.login;
+package com.ffcc66.sxyj.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.ffcc66.sxyj.R;
 
+/**
+ * 注册activity
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     @Override

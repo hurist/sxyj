@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.bookstore;
+package com.ffcc66.sxyj.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,6 +18,9 @@ import com.ffcc66.sxyj.entity.TempCommend;
 
 import java.util.List;
 
+/**
+ * 图书排行列表页adapter
+ */
 public class BookRankingAdapter extends ArrayAdapter {
 
     private int resourceId;

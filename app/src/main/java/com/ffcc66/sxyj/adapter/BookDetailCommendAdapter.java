@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.bookstore;
+package com.ffcc66.sxyj.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,6 +16,9 @@ import com.ffcc66.sxyj.entity.TempCommend;
 
 import java.util.List;
 
+/**
+ * 图书详情页书评adapter
+ */
 public class BookDetailCommendAdapter extends ArrayAdapter {
 
     private int resourceId;

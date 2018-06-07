@@ -37,26 +37,26 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.RegisterActivity" />
-        <activity android:name=".bookstore.BookDetailActivity" />
-        <activity android:name=".bookstore.bookcategary.BookCategaryActivity" />
-        <activity android:name=".bookstore.BookRankingActivity" />
-        <activity android:name=".bookstore.booklist.BookListActivity" />
-        <activity android:name=".bookstore.bookcategary.BookCategaryListActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.BookDetailActivity" />
+        <activity android:name=".activity.BookCategaryActivity" />
+        <activity android:name=".activity.BookRankingActivity" />
+        <activity android:name=".activity.BookListActivity" />
+        <activity android:name=".activity.BookCategaryListActivity"></activity>
         <activity
             android:name=".filechooser.FileChooserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ReadActivity"></activity>
-        <activity android:name=".MarkActivity"></activity>
+        <activity android:name=".activity.MarkActivity"></activity>
 
     </application>
 

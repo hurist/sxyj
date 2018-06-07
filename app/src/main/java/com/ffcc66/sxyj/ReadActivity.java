@@ -35,6 +35,7 @@ import android.widget.Toast;
 //import com.baidu.tts.client.SpeechSynthesizerListener;
 //import com.baidu.tts.client.TtsMode;
 import com.ffcc66.sxyj.View.PageWidget;
+import com.ffcc66.sxyj.activity.MarkActivity;
 import com.ffcc66.sxyj.base.BaseActivity;
 import com.ffcc66.sxyj.dialog.PageModeDialog;
 import com.ffcc66.sxyj.dialog.SettingDialog;
@@ -48,6 +49,7 @@ import org.litepal.crud.DataSupport;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +57,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2016/7/15 0015.
+ * 阅读activity
  */
 public class ReadActivity extends BaseActivity {
     private static final String TAG = "ReadActivity";
@@ -351,13 +353,6 @@ public class ReadActivity extends BaseActivity {
 //        }
     }
 
-    @Override
-    protected void onStop(){
-        super.onStop();
-//        if (mSpeechSynthesizer != null){
-//            mSpeechSynthesizer.stop();
-//        }
-    }
 
     @Override
     protected void onDestroy() {
@@ -365,10 +360,6 @@ public class ReadActivity extends BaseActivity {
         pageFactory.clear();
         bookpage = null;
         unregisterReceiver(myReceiver);
-//        isSpeaking = false;
-//        if (mSpeechSynthesizer != null){
-//            mSpeechSynthesizer.release();
-//        }
     }
 
     @Override
@@ -436,26 +427,7 @@ public class ReadActivity extends BaseActivity {
                     }
                 }
             }
-        }/*else if (id == R.id.action_read_book){
-            initialTts();
-            if (mSpeechSynthesizer != null){
-                mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_VOLUME, "5");
-                mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEED, "5");
-                mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_PITCH, "5");
-                mSpeechSynthesizer.setParam(SpeechSynthesizer.PARAM_SPEAKER, "0");
-//                mSpeechSynthesizer.setParam(SpeechSynthesizer. MIX_MODE_DEFAULT);
-//                mSpeechSynthesizer.setParam(SpeechSynthesizer. AUDIO_ENCODE_AMR);
-//                mSpeechSynthesizer.setParam(SpeechSynthesizer. AUDIO_BITRA TE_AMR_15K85);
-                mSpeechSynthesizer.setParam(SpeechSynthesizer. PARAM_VOCODER_OPTIM_LEVEL, "0");
-                int result = mSpeechSynthesizer.speak(pageFactory.getCurrentPage().getLineToString());
-                if (result < 0) {
-                    Log.e(TAG,"error,please look up error code in doc or URL:http://yuyin.baidu.com/docs/tts/122 ");
-                }else{
-                    hideReadSetting();
-                    isSpeaking = true;
-                }
-            }
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -474,9 +446,6 @@ public class ReadActivity extends BaseActivity {
         return true;
     }
 
-//    public BookPageWidget getPageWidget() {
-//        return bookpage;
-//    }
 
     /**
      * 隐藏菜单。沉浸式阅读
@@ -553,11 +522,6 @@ public class ReadActivity extends BaseActivity {
         isShow = true;
         rl_progress.setVisibility(View.GONE);
 
-//        if (isSpeaking){
-//            Animation topAnim = AnimationUtils.loadAnimation(this, R.anim.dialog_top_enter);
-//            rl_read_bottom.startAnimation(topAnim);
-//            rl_read_bottom.setVisibility(View.VISIBLE);
-//        }else {
             showSystemUI();
 
             Animation bottomAnim = AnimationUtils.loadAnimation(this, R.anim.dialog_enter);

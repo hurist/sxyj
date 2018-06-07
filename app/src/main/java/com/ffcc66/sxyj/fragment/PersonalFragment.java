@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.personal;
+package com.ffcc66.sxyj.fragment;
 
 
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.ffcc66.sxyj.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 个人中心fragment
  */
 public class PersonalFragment extends Fragment {
 

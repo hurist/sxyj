@@ -8,9 +8,8 @@ import java.util.List;
 
 /**
  * Created by yanhe on 2018/5/7.
- *
+ * 首页viewpager适配器
  */
-
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fragmentList;

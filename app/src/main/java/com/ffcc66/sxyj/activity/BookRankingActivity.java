@@ -1,14 +1,11 @@
-package com.ffcc66.sxyj.bookstore;
+package com.ffcc66.sxyj.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.base.BaseActivity;
+import com.ffcc66.sxyj.adapter.BookRankingAdapter;
 import com.ffcc66.sxyj.entity.Book;
 
 import java.util.ArrayList;
@@ -16,6 +13,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 图书排行页activity
+ */
 public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
 
     @BindView(R.id.lvBookRanking)
@@ -32,7 +32,7 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
     @Override
     protected void initData() {
         initCollectionRankingData();
-        BookRankingAdapter bookRankingAdapter = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+        BookRankingAdapter bookRankingAdapter = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
         lvBookRanking.setAdapter(bookRankingAdapter);
     }
 
@@ -46,27 +46,27 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
         switch (i) {
             case R.id.rbCollection:
                 initCollectionRankingData();
-                BookRankingAdapter bookRankingAdapter = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+                BookRankingAdapter bookRankingAdapter = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
                 lvBookRanking.setAdapter(bookRankingAdapter);
                 break;
             case R.id.rbSearch:
                 initSearchRankingData();
-                BookRankingAdapter bookRankingAdapter1 = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+                BookRankingAdapter bookRankingAdapter1 = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
                 lvBookRanking.setAdapter(bookRankingAdapter1);
                 break;
             case R.id.rbCommend:
                 initCommendRankingData();
-                BookRankingAdapter bookRankingAdapter2 = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+                BookRankingAdapter bookRankingAdapter2 = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
                 lvBookRanking.setAdapter(bookRankingAdapter2);
                 break;
             case R.id.rbClick:
                 initClickRankingData();
-                BookRankingAdapter bookRankingAdapter3 = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+                BookRankingAdapter bookRankingAdapter3 = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
                 lvBookRanking.setAdapter(bookRankingAdapter3);
                 break;
             case R.id.rbNewBook:
                 initNewBookRankingData();
-                BookRankingAdapter bookRankingAdapter4 = new BookRankingAdapter(BookRankingActivity.this,R.layout.activity_book_ranking_item,books);
+                BookRankingAdapter bookRankingAdapter4 = new BookRankingAdapter(BookRankingActivity.this,R.layout.item_activity_book_ranking,books);
                 lvBookRanking.setAdapter(bookRankingAdapter4);
                 break;
         }

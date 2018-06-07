@@ -7,10 +7,10 @@ import android.util.Log;
 
 import com.ffcc66.sxyj.adapter.MyFragmentPagerAdapter;
 import com.ffcc66.sxyj.base.BaseActivity;
-import com.ffcc66.sxyj.bookcase.BookCaseFragment;
-import com.ffcc66.sxyj.bookstore.BookStoreFragment;
+import com.ffcc66.sxyj.fragment.BookCaseFragment;
+import com.ffcc66.sxyj.fragment.BookStoreFragment;
 import com.ffcc66.sxyj.entity.BookList;
-import com.ffcc66.sxyj.personal.PersonalFragment;
+import com.ffcc66.sxyj.fragment.PersonalFragment;
 
 import org.litepal.crud.DataSupport;
 

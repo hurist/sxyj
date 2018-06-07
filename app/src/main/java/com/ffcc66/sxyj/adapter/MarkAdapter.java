@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/1/3.
+ * 图书书签列表适配器adapter
  */
 public class MarkAdapter extends BaseAdapter {
     private Context mContext;

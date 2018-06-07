@@ -20,7 +20,7 @@ import com.ffcc66.sxyj.View.BookPageWidget;
 import java.text.DecimalFormat;
 
 /**
- * Created by Administrator on 2016/7/19 0019.
+ * 阅读设置dialog
  */
 public class ReadSettingDialog implements BaseDialog,View.OnClickListener {
 

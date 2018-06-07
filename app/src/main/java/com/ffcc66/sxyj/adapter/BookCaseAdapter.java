@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.bookcase;
+package com.ffcc66.sxyj.adapter;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,6 +26,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static android.support.constraint.Constraints.TAG;
+
+/**
+ * 书架列表适配器
+ */
 public class BookCaseAdapter extends ArrayAdapter {
 
     protected List<AsyncTask<Void, Void, Boolean>> myAsyncTasks = new ArrayList<>();
@@ -35,12 +40,12 @@ public class BookCaseAdapter extends ArrayAdapter {
     public BookCaseAdapter(Context context, int viewResouceId, List<BookList> bookList) {
         super(context,viewResouceId,bookList);
         this.resourceId = viewResouceId;
+        bilist = bookList;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        BookList book = (BookList) getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -59,12 +64,12 @@ public class BookCaseAdapter extends ArrayAdapter {
 
         SimpleDateFormat sp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        if (book.getCoverpath() == null) {
+        if (bilist.get(position).getCoverpath() == null) {
             viewHolder.ivCover.setImageResource(R.drawable.test);
         }
-        viewHolder.tvBookName.setText(book.getBookname());
-        viewHolder.tvReadProcess.setText("阅读进度"+book.getReadprocess());
-        viewHolder.tvLastReadTime.setText("上次阅读时间："+sp.format(new Date(book.getLastreadtime())));
+        viewHolder.tvBookName.setText(bilist.get(position).getBookname());
+        viewHolder.tvReadProcess.setText("阅读进度"+bilist.get(position).getReadprocess());
+        viewHolder.tvLastReadTime.setText("上次阅读时间："+sp.format(new Date(bilist.get(position).getLastreadtime())));
 
         return view;
     }
@@ -124,7 +129,6 @@ public class BookCaseAdapter extends ArrayAdapter {
         bookLists1 = DataSupport.findAll(BookList.class);
         int tempId = bookLists1.get(0).getId();  //列表中第一项的id
         BookList temp = bookLists1.get(openPosition);      //被打开书的详细信息
-        // Log.d("setitem adapter ",""+openPosition);
         if(openPosition!=0) {
             for (int i = openPosition; i > 0 ; i--) {
                 List<BookList> bookListsList = new ArrayList<>();
@@ -137,16 +141,7 @@ public class BookCaseAdapter extends ArrayAdapter {
 
             bookLists1.set(0, temp);
             updateBookPosition(0, tempId, bookLists1);
-            for (int j = 0 ;j<bookLists1.size();j++) {
-                String bookpath = bookLists1.get(j).getBookpath();
-                //  Log.d("移动到第一位",bookpath);
-            }
         }
-        notifyDataSetChanged();
-    }
-
-    public void nitifyDataRefresh() {
-        notifyDataSetChanged();
     }
 
     public void putAsyncTask(AsyncTask<Void, Void, Boolean> asyncTask) {

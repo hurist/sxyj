@@ -1,4 +1,4 @@
-package com.ffcc66.sxyj.bookstore;
+package com.ffcc66.sxyj.fragment;
 
 
 import android.content.Intent;
@@ -12,8 +12,11 @@ import android.widget.LinearLayout;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
-import com.ffcc66.sxyj.bookstore.bookcategary.BookCategaryActivity;
-import com.ffcc66.sxyj.bookstore.booklist.BookListActivity;
+import com.ffcc66.sxyj.activity.BookDetailActivity;
+import com.ffcc66.sxyj.activity.BookRankingActivity;
+import com.ffcc66.sxyj.adapter.BookStoreAdapter;
+import com.ffcc66.sxyj.activity.BookCategaryActivity;
+import com.ffcc66.sxyj.activity.BookListActivity;
 import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.util.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 书城fragment
  */
 public class BookStoreFragment extends Fragment implements AdapterView.OnItemClickListener,View.OnClickListener{
 
@@ -50,7 +53,7 @@ public class BookStoreFragment extends Fragment implements AdapterView.OnItemCli
         initData();
         initView(view);
 
-        BookStoreAdapter bookStoreAdapter = new BookStoreAdapter(getContext(),R.layout.fragment_book_store_item,books);
+        BookStoreAdapter bookStoreAdapter = new BookStoreAdapter(getContext(),R.layout.item_fragment_book_store,books);
         lvNewBookRecommend.setAdapter(bookStoreAdapter);
         
         return view;
