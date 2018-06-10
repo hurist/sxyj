@@ -52,9 +52,11 @@ public class FileChooserActivity extends AppCompatActivity {
         });
 
         fragmentManager = getSupportFragmentManager();
+        //fragment事务管理器
         fragmentTransaction = fragmentManager.beginTransaction();
-
         mDirectoryFragment = new DirectoryFragment();
+
+        //设置文档选择活动委托
         mDirectoryFragment.setDelegate(new DirectoryFragment.DocumentSelectActivityDelegate() {
 
             @Override
@@ -62,18 +64,21 @@ public class FileChooserActivity extends AppCompatActivity {
 
             }
 
+            //选择打开文件时的操作
             @Override
             public void didSelectFiles(DirectoryFragment activity,
                                        ArrayList<String> files) {
                 mDirectoryFragment.showReadBox(files.get(0).toString());
             }
 
+            //更新toolbar标题
             @Override
             public void updateToolBarName(String name) {
                 toolbar.setTitle(name);
 
             }
         });
+        //添加DirectoryFragment
         fragmentTransaction.add(R.id.fragment_container, mDirectoryFragment, "" + mDirectoryFragment.toString());
         fragmentTransaction.commit();
 

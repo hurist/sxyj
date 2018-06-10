@@ -72,7 +72,7 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(),R.drawable.bookcase_manager));
         toolbar.setOnMenuItemClickListener(this);
 
-        //booklist = DataSupport.findAll(BookList.class);
+        booklist = DataSupport.findAll(BookList.class);
         bookCaseAdapter = new BookCaseAdapter(getActivity(), R.layout.item_fragment_book_case, booklist);
         lvBookcase.setAdapter(bookCaseAdapter);
         lvBookcase.setOnItemClickListener(this);
@@ -89,7 +89,10 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
     protected void LazyLoad() {
         super.LazyLoad();
         Log.d(TAG, "LazyLoad: ");
-        booklist = DataSupport.findAll(BookList.class);
+        List<BookList> tempbooklist = new ArrayList<>();
+        tempbooklist = DataSupport.findAll(BookList.class);
+        booklist.clear();
+        booklist.addAll(tempbooklist);
 
         if (isCreate) {
             Log.d(TAG, "LazyLoad: "+"notifyDataSetChanged");
@@ -120,7 +123,6 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         if (booklist.size() > position) {
             itemPosition = position;
-//            String bookname = booklist.get(itemPosition).getBookname();
 
             bookCaseAdapter.setItemToFirst(itemPosition);
 //                bookLists = DataSupport.findAll(BookList.class);
@@ -150,6 +152,7 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
     @Override
     public void onResume() {
         super.onResume();
-        bookCaseAdapter.setBookList(DataSupport.findAll(BookList.class));
+        setUserVisibleHint(true);
     }
+    
 }

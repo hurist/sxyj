@@ -35,12 +35,17 @@ public class BookCaseAdapter extends ArrayAdapter {
 
     protected List<AsyncTask<Void, Void, Boolean>> myAsyncTasks = new ArrayList<>();
     private List<BookList> bilist;
+    private List<BookList> bilist1;
 
     private int resourceId;
     public BookCaseAdapter(Context context, int viewResouceId, List<BookList> bookList) {
         super(context,viewResouceId,bookList);
         this.resourceId = viewResouceId;
         bilist = bookList;
+        bilist1 = bilist;
+
+        Log.d(TAG, "BookCaseAdapter:bilist = bookList? "+(bilist.equals(bookList)));
+        Log.d(TAG, "BookCaseAdapter: "+bilist);
     }
 
     @NonNull
@@ -117,6 +122,8 @@ public class BookCaseAdapter extends ArrayAdapter {
 
     public void setBookList(List<BookList> bookLists){
         this.bilist = bookLists;
+        Log.d(TAG, "BookCaseAdapter:bilist = bilist1? "+bilist.equals(bilist1));
+        Log.d(TAG, "BookCaseAdapter: "+bilist);
         notifyDataSetChanged();
     }
     /**

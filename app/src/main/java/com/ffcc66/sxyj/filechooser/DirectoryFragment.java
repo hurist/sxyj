@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.ReadActivity;
 import com.ffcc66.sxyj.entity.BookList;
 //import com.zijie.treader.R;
 import com.ffcc66.sxyj.util.FileUtils;
@@ -51,23 +52,19 @@ import java.util.List;
 
 public class DirectoryFragment extends Fragment implements View.OnClickListener {
 
+    private static String title_ = "";
     private View fragmentView;
     private boolean receiverRegistered = false;
-    private File currentDir;
-
+    private File currentDir;    //当前目录
     private ListView listView;
     private ListAdapter listAdapter;
     private TextView emptyView;
-
     private LinearLayout layout_bottom;
     private Button btn_choose_all;
     private Button btn_delete;
     private Button btn_add_file;
-
     private DocumentSelectActivityDelegate delegate;
-
-    private static String title_ = "";
-    private ArrayList<ListItem> items = new ArrayList<ListItem>();
+    private ArrayList<ListItem> items = new ArrayList<ListItem>();  //listview列表数据
     private ArrayList<ListItem> checkItems = new ArrayList<ListItem>();
     private ArrayList<HistoryEntry> history = new ArrayList<HistoryEntry>();
     private HashMap<String, ListItem> selectedFiles = new HashMap<String, ListItem>();
@@ -75,30 +72,80 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
     private long sizeLimit = 1024 * 1024 * 1024;
 
     private String[] chhosefileType = {".txt"};
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            Runnable r = new Runnable() {
+                public void run() {
+                    try {
+                        if (currentDir == null) {
+                            listRoots();
+                        } else {
+                            listFiles(currentDir);
+                        }
+                    } catch (Exception e) {
+                        Log.e("tmessages", e.toString());
+                    }
+                }
+            };
+            if (Intent.ACTION_MEDIA_UNMOUNTED.equals(intent.getAction())) {
+                listView.postDelayed(r, 1000);
+            } else {
+                r.run();
+            }
+        }
+    };
 
-    private class HistoryEntry {
-        int scrollItem, scrollOffset;
-        File dir;
-        String title;
+    /**
+     * 格式化输出文件大小
+     *
+     * @param size
+     * @return 多少B 或多少KB 或多少M
+     */
+    public static String formatFileSize(long size) {
+        if (size < 1024) {
+            return String.format("%d B", size);
+        } else if (size < 1024 * 1024) {
+            return String.format("%.1f KB", size / 1024.0f);
+        } else if (size < 1024 * 1024 * 1024) {
+            return String.format("%.1f MB", size / 1024.0f / 1024.0f);
+        } else {
+            return String.format("%.1f GB", size / 1024.0f / 1024.0f / 1024.0f);
+        }
     }
 
-    public static abstract interface DocumentSelectActivityDelegate {
-        public void didSelectFiles(DirectoryFragment activity, ArrayList<String> files);
-
-        public void startDocumentSelectActivity();
-
-        public void updateToolBarName(String name);
+    public static void clearDrawableAnimation(View view) {
+        if (Build.VERSION.SDK_INT < 21 || view == null) {
+            return;
+        }
+        Drawable drawable = null;
+        if (view instanceof ListView) {
+            drawable = ((ListView) view).getSelector();
+            if (drawable != null) {
+                drawable.setState(StateSet.NOTHING);
+            }
+        } else {
+            drawable = view.getBackground();
+            if (drawable != null) {
+                drawable.setState(StateSet.NOTHING);
+                drawable.jumpToCurrentState();
+            }
+        }
     }
 
-
+    /**
+     * 返回按键监听操作
+     *
+     * @return false表示还未回到最外层，true表示已经到最外层，再按就退出
+     */
     public boolean onBackPressed_() {
         if (history.size() > 0) {
             HistoryEntry he = history.remove(history.size() - 1);
             title_ = he.title;
             updateName(title_);
-            if (he.dir != null) {
+            if (he.dir != null) {   //上一步不是根目录时
                 listFiles(he.dir);
-            } else {
+            } else {        //是根目录时
                 listRoots();
             }
             listView.setSelectionFromTop(he.scrollItem, he.scrollOffset);
@@ -124,41 +171,13 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context arg0, Intent intent) {
-            Runnable r = new Runnable() {
-                public void run() {
-                    try {
-                        if (currentDir == null) {
-                            listRoots();
-                        } else {
-                            listFiles(currentDir);
-                        }
-                    } catch (Exception e) {
-                        Log.e("tmessages", e.toString());
-                    }
-                }
-            };
-            if (Intent.ACTION_MEDIA_UNMOUNTED.equals(intent.getAction())) {
-                listView.postDelayed(r, 1000);
-            } else {
-                r.run();
-            }
-        }
-    };
-
+    /**
+     * 设置代理
+     *
+     * @param delegate
+     */
     public void setDelegate(DocumentSelectActivityDelegate delegate) {
         this.delegate = delegate;
-    }
-
-    private class ListItem {
-        int icon;
-        String title;
-        String subtitle = "";
-        String ext = "";
-        String thumb;
-        File file;
     }
 
     @Override
@@ -168,30 +187,32 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         if (!receiverRegistered) {
             receiverRegistered = true;
             IntentFilter filter = new IntentFilter();
-            filter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL);
-            filter.addAction(Intent.ACTION_MEDIA_CHECKING);
-            filter.addAction(Intent.ACTION_MEDIA_EJECT);
-            filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-            filter.addAction(Intent.ACTION_MEDIA_NOFS);
-            filter.addAction(Intent.ACTION_MEDIA_REMOVED);
-            filter.addAction(Intent.ACTION_MEDIA_SHARED);
-            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTABLE);
-            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            //与SD卡挂载相关的Intent的action属性
+            filter.addAction(Intent.ACTION_MEDIA_BAD_REMOVAL); //未正确移除SD卡但已取出来时
+            filter.addAction(Intent.ACTION_MEDIA_CHECKING);  //插入外部储存装置（如SD卡）
+            filter.addAction(Intent.ACTION_MEDIA_EJECT);    //ACTION_MEDIA_EJECT表示用户欲卸载SD卡，但是SD卡上的部分内容尚处于打开状态
+            filter.addAction(Intent.ACTION_MEDIA_MOUNTED);  //插入SD卡并且已正确安装（识别）时发出的广播
+            filter.addAction(Intent.ACTION_MEDIA_NOFS);     //介质存在但是为空白或用在不支持的文件系统
+            filter.addAction(Intent.ACTION_MEDIA_REMOVED);  //外部储存设备已被移除，不管有没正确卸载,都会发出此广播？
+            filter.addAction(Intent.ACTION_MEDIA_SHARED);   // 广播：扩展介质的挂载被解除 (unmount)，因为它已经作为 USB 大容量存储被共享。
+            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTABLE);  //表示SD卡存在，但是无法挂载
+            filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);    // 广播：扩展介质存在，但是还没有被挂载 (mount)。
             filter.addDataScheme("file");
             getActivity().registerReceiver(receiver, filter);
         }
 
-//        bookLists = DataSupport.findAll(BookList.class);
+        bookLists = DataSupport.findAll(BookList.class);
 
         if (fragmentView == null) {
             fragmentView = inflater.inflate(R.layout.fragment_directory_fragment,
                     container, false);
 
+            //底部按钮栏
             layout_bottom = (LinearLayout) fragmentView
                     .findViewById(R.id.layout_bottom);
             btn_choose_all = (Button) fragmentView
                     .findViewById(R.id.btn_choose_all);
-            btn_delete = (Button) fragmentView
+            btn_delete = (Button) fragmentView      //取消按钮
                     .findViewById(R.id.btn_delete);
             btn_add_file = (Button) fragmentView
                     .findViewById(R.id.btn_add_file);
@@ -201,7 +222,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
 
 
             listAdapter = new ListAdapter(getActivity());
-            emptyView = (TextView) fragmentView
+            emptyView = (TextView) fragmentView     //空布局，用于在listview没有数据时显示
                     .findViewById(R.id.searchEmptyView);
             emptyView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -233,34 +254,36 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                         }
                         listView.setSelectionFromTop(he.scrollItem,
                                 he.scrollOffset);
-                    } else if (file.isDirectory()) {
+                    } else if (file.isDirectory()) {    //如果点击的是一个目录（文件夹）
+                        //记录历史
                         HistoryEntry he = new HistoryEntry();
-                        he.scrollItem = listView.getFirstVisiblePosition();
-                        he.scrollOffset = listView.getChildAt(0).getTop();
+                        he.scrollItem = listView.getFirstVisiblePosition(); //获取第一个可见的item的位置
+                        he.scrollOffset = listView.getChildAt(0).getTop();  //获取第一个可见的item到父容器顶部的距离。用于返回上一级时回到同一位置
                         he.dir = currentDir;
                         he.title = title_.toString();
-                        updateName(title_);
-                        if (!listFiles(file)) {
+
+                        //updateName(title_);     //更改toolbar标题
+                        if (!listFiles(file)) {     //列出下一级的文件和文件夹
                             return;
                         }
-                        history.add(he);
+                        history.add(he);        //记录此次历史
                         title_ = item.title;
-                        updateName(title_);
-                        listView.setSelection(0);
+                        updateName(title_);     //更改toolbar标题
+                        listView.setSelection(0);  //将打开下级目录的listview位置恢复到最上面
                     } else {
-                        if (!file.canRead()) {
+                        if (!file.canRead()) {  //文件不能读
                             showErrorBox("没有权限！");
                             return;
                         }
-                        if (sizeLimit != 0) {
+                        if (sizeLimit != 0) {       //文件过大
                             if (file.length() > sizeLimit) {
                                 showErrorBox("文件大小超出限制！");
                                 return;
                             }
                         }
-                        if (file.length() == 0) {
+                        if (file.length() == 0) {       //文件大小为 0
                             return;
-                        }
+                        }   //打开文件
                         if (file.toString().contains(chhosefileType[0]) ||
                                 file.toString().contains(chhosefileType[1]) ||
                                 file.toString().contains(chhosefileType[2]) ||
@@ -279,6 +302,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                     }
                 }
             });
+            //改变加入书架按钮上的图书本数
             changgeCheckBookNum();
             listRoots();
         } else {
@@ -301,7 +325,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.btn_choose_all:
                 checkAll();
                 changgeCheckBookNum();
@@ -320,7 +344,10 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void addCheckBook(){
+    /**
+     * 将选择的图书加入
+     */
+    private void addCheckBook() {
         if (checkItems.size() > 0) {
             List<BookList> bookLists = new ArrayList<BookList>();
             for (ListItem item : checkItems) {
@@ -335,18 +362,21 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void checkAll(){
-        for (ListItem listItem : items){
-            if (!TextUtils.isEmpty(listItem.thumb)){
+    /**
+     * 选择全部
+     */
+    private void checkAll() {
+        for (ListItem listItem : items) {
+            if (!TextUtils.isEmpty(listItem.thumb)) {
                 boolean isCheck = false;
-                for (ListItem item : checkItems){
-                    if (item.thumb.equals(listItem.thumb)){
+                for (ListItem item : checkItems) {
+                    if (item.thumb.equals(listItem.thumb)) {
                         isCheck = true;
                         break;
                     }
                 }
-                for (BookList list : bookLists){
-                    if (list.getBookpath().equals(listItem.thumb)){
+                for (BookList list : bookLists) {
+                    if (list.getBookpath().equals(listItem.thumb)) {
                         isCheck = true;
                         break;
                     }
@@ -358,62 +388,19 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private class SaveBookToSqlLiteTask extends AsyncTask<List<BookList>,Void,Integer> {
-        private static final int FAIL = 0;
-        private static final int SUCCESS = 1;
-        private static final int REPEAT = 2;
-        private BookList repeatBookList;
-
-        @Override
-        protected Integer doInBackground(List<BookList>... params) {
-            List<BookList> bookLists = params[0];
-            for (BookList bookList : bookLists){
-                List<BookList> books = DataSupport.where("bookpath = ?", bookList.getBookpath()).find(BookList.class);
-                if (books.size() > 0){
-                    repeatBookList = bookList;
-                    return REPEAT;
-                }
-            }
-
-            try {
-                DataSupport.saveAll(bookLists);
-            } catch (Exception e){
-                e.printStackTrace();
-                return FAIL;
-            }
-            return SUCCESS;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-            super.onPostExecute(result);
-            String msg = "";
-            switch (result){
-                case FAIL:
-                    msg = "由于一些原因添加书本失败";
-                    break;
-                case SUCCESS:
-                    msg = "导入书本成功";
-                    checkItems.clear();
-                    bookLists = DataSupport.findAll(BookList.class);
-                    listAdapter.notifyDataSetChanged();
-                    changgeCheckBookNum();
-                    break;
-                case REPEAT:
-                    msg = "书本" + repeatBookList.getBookname() + "重复了";
-                    break;
-            }
-
-            Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    /**
+     * 列出根目录、内置存储、外置存储
+     */
     private void listRoots() {
         currentDir = null;
         items.clear();
+
+        //获取内部存储
+        //获取sdcard的绝对路径，这里可能是内部存储也可能是外部sd卡,根据具体系统
         String extStorage = Environment.getExternalStorageDirectory()
                 .getAbsolutePath();
         ListItem ext = new ListItem();
+        //判断时内部还是外部存储
         if (Build.VERSION.SDK_INT < 9
                 || Environment.isExternalStorageRemovable()) {
             ext.title = "SdCard";
@@ -424,11 +411,13 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 || Environment.isExternalStorageRemovable() ? R.mipmap.ic_external_storage
                 : R.mipmap.ic_storage;
         ext.subtitle = getRootSubtitle(extStorage);
-        ext.file = Environment.getExternalStorageDirectory();
-        items.add(ext);
+        ext.file = Environment.getExternalStorageDirectory();   //获取内存卡的目录并存储下来
+        items.add(ext);     //将内存卡的相关数据加入list
+
+        //获取外部存储
         try {
             BufferedReader reader = new BufferedReader(new FileReader(
-                    "/proc/mounts"));
+                    "/proc/mounts"));   //当前系统所安装的文件系统信息
             String line;
             HashMap<String, ArrayList<String>> aliases = new HashMap<String, ArrayList<String>>();
             ArrayList<String> result = new ArrayList<String>();
@@ -473,6 +462,8 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         } catch (Exception e) {
             Log.e("tmessages", e.toString());
         }
+
+        //获取系统根目录
         ListItem fs = new ListItem();
         fs.title = "/";
         fs.subtitle = "系统目录";
@@ -500,20 +491,26 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         listAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 列出目录的下一级内容
+     *
+     * @param dir 目录路径
+     * @return 无法读取返回false。正常则返回true
+     */
     private boolean listFiles(File dir) {
-        if (!dir.canRead()) {
+        if (!dir.canRead()) {   //如果不可读
             if (dir.getAbsolutePath().startsWith(
                     Environment.getExternalStorageDirectory().toString())
                     || dir.getAbsolutePath().startsWith("/sdcard")
-                    || dir.getAbsolutePath().startsWith("/mnt/sdcard")) {
-                if (!Environment.getExternalStorageState().equals(
+                    || dir.getAbsolutePath().startsWith("/mnt/sdcard")) {   //是否是存储卡中的内容
+                if (!Environment.getExternalStorageState().equals(         //判断存储卡的状态，是否被挂载，是否为只读
                         Environment.MEDIA_MOUNTED)
                         && !Environment.getExternalStorageState().equals(
-                        Environment.MEDIA_MOUNTED_READ_ONLY)) {
+                        Environment.MEDIA_MOUNTED_READ_ONLY)) {     //如果即没被挂载且又不是可读的
                     currentDir = dir;
                     items.clear();
                     String state = Environment.getExternalStorageState();
-                    if (Environment.MEDIA_SHARED.equals(state)) {
+                    if (Environment.MEDIA_SHARED.equals(state)) {   //如果储存卡被作为usb大容量存储分享
                         emptyView.setText("UsbActive");
                     } else {
                         emptyView.setText("NotMounted");
@@ -527,6 +524,9 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
             showErrorBox("没有权限!");
             return false;
         }
+
+
+        //获取下一级的所有文件夹和文件信息
         emptyView.setText("没有文件!");
         File[] files = null;
         try {
@@ -540,7 +540,8 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
             return false;
         }
         currentDir = dir;
-        items.clear();
+        items.clear();  //将item清空
+        //将下一级的所有文件夹和文件信息按名称排序
         Arrays.sort(files, new Comparator<File>() {
             @Override
             public int compare(File lhs, File rhs) {
@@ -548,17 +549,15 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                     return lhs.isDirectory() ? -1 : 1;
                 }
                 return lhs.getName().compareToIgnoreCase(rhs.getName());
-                /*
-                 * long lm = lhs.lastModified(); long rm = lhs.lastModified();
-                 * if (lm == rm) { return 0; } else if (lm > rm) { return -1; }
-                 * else { return 1; }
-                 */
             }
         });
         for (File file : files) {
+            //是否为隐藏文件/夹 || (不是一个目录 且 拓展名不为TXT) ，成立则直接跳过
             if (file.getName().startsWith(".") || (!file.isDirectory() && !file.getName().endsWith(".txt"))) {
                 continue;
             }
+
+            //判断类型，获取详细信息之类的操作
             ListItem item = new ListItem();
             item.title = file.getName();
             item.file = file;
@@ -566,18 +565,20 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 item.icon = R.mipmap.ic_directory;
                 item.subtitle = "文件夹";
             } else {
-                String fname = file.getName();
+                String fname = file.getName();     //这里获取的是带文件拓展名的文件名称
                 String[] sp = fname.split("\\.");
-                item.ext = sp.length > 1 ? sp[sp.length - 1] : "?";
-                item.subtitle = formatFileSize(file.length());
-                fname = fname.toLowerCase();
-                if (fname.endsWith(".jpg") || fname.endsWith(".png")
-                        || fname.endsWith(".gif") || fname.endsWith(".jpeg") || fname.endsWith(".txt")) {
-                    item.thumb = file.getAbsolutePath();
+                item.ext = sp.length > 1 ? sp[sp.length - 1] : "?"; //获取文件拓展名
+                item.subtitle = formatFileSize(file.length());  //获取文件大小
+                fname = fname.toLowerCase();    //将文件名字改成小写
+                if (/*fname.endsWith(".jpg") || fname.endsWith(".png")
+                        || fname.endsWith(".gif") || fname.endsWith(".jpeg") ||*/ fname.endsWith(".txt")) {
+                    item.thumb = file.getAbsolutePath();    //获取绝对路径，（暂时有疑问，为图片格式时执行操作，这里应该是作者的失误？因此注释）
                 }
             }
             items.add(item);
         }
+
+        //将返回上级目录的文件夹加入item
         ListItem item = new ListItem();
         item.title = "..";
         item.subtitle = "文件夹";
@@ -590,37 +591,11 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         return true;
     }
 
-    public static String formatFileSize(long size) {
-        if (size < 1024) {
-            return String.format("%d B", size);
-        } else if (size < 1024 * 1024) {
-            return String.format("%.1f KB", size / 1024.0f);
-        } else if (size < 1024 * 1024 * 1024) {
-            return String.format("%.1f MB", size / 1024.0f / 1024.0f);
-        } else {
-            return String.format("%.1f GB", size / 1024.0f / 1024.0f / 1024.0f);
-        }
-    }
-
-    public static void clearDrawableAnimation(View view) {
-        if (Build.VERSION.SDK_INT < 21 || view == null) {
-            return;
-        }
-        Drawable drawable = null;
-        if (view instanceof ListView) {
-            drawable = ((ListView) view).getSelector();
-            if (drawable != null) {
-                drawable.setState(StateSet.NOTHING);
-            }
-        } else {
-            drawable = view.getBackground();
-            if (drawable != null) {
-                drawable.setState(StateSet.NOTHING);
-                drawable.jumpToCurrentState();
-            }
-        }
-    }
-
+    /**
+     * 显示错误消息
+     *
+     * @param error 内容
+     */
     public void showErrorBox(String error) {
         if (getActivity() == null) {
             return;
@@ -630,6 +605,11 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 .setMessage(error).setPositiveButton("OK", null).show();
     }
 
+    /**
+     * 显示是否打开文件并阅读的对话框
+     *
+     * @param path
+     */
     public void showReadBox(final String path) {
         if (getActivity() == null) {
             return;
@@ -645,21 +625,26 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 bookList.setBookpath(path);
 
                 boolean isSave = false;
-                for (BookList book : bookLists){
-                    if (book.getBookpath().equals(bookList.getBookpath())){
+                for (BookList book : bookLists) {
+                    if (book.getBookpath().equals(bookList.getBookpath())) {
                         isSave = true;
                     }
                 }
 
-                if (!isSave){
+                if (!isSave) {
                     bookList.save();
                 }
-             //暂时   ReadActivity.openBook(bookList,getActivity());
+                ReadActivity.openBook(bookList, getActivity());
             }
         }).show();
     }
 
-
+    /**
+     * 获取外部存储的一些空间信息
+     *
+     * @param path
+     * @return 空间信息
+     */
     private String getRootSubtitle(String path) {
         StatFs stat = new StatFs(path);
         long total = (long) stat.getBlockCount() * (long) stat.getBlockSize();
@@ -671,10 +656,102 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         return "Free " + formatFileSize(free) + " of " + formatFileSize(total);
     }
 
-    private void changgeCheckBookNum(){
+    /**
+     * 改变选中图书的数量显示
+     */
+    private void changgeCheckBookNum() {
         btn_add_file.setText("加入书架(" + checkItems.size() + ")");
     }
 
+    public void finishFragment() {
+
+    }
+
+    public static abstract interface DocumentSelectActivityDelegate {
+        public void didSelectFiles(DirectoryFragment activity, ArrayList<String> files);
+
+        public void startDocumentSelectActivity();
+
+        public void updateToolBarName(String name);
+    }
+
+    /**
+     * 历史记录实体
+     */
+    private class HistoryEntry {
+        int scrollItem, scrollOffset;       //第一个可见的item的位置，以及距离父布局的偏移量，用于返回上级时回到同样的位置
+        File dir;
+        String title;
+    }
+
+    /**
+     * 文件列表的item实体
+     */
+    private class ListItem {
+        int icon;   //图标
+        String title;   //文件或者路径名称
+        String subtitle = "";   //副标题，为文件夹时显示文件夹，为存储卡是显示容量信息，为文件时则显示大小
+        String ext = "";    //文件拓展名
+        String thumb;       //文件的绝对路径
+        File file;     //路径或文件本身
+    }
+
+    /**
+     * 异步将文件信息存入数据库
+     */
+    private class SaveBookToSqlLiteTask extends AsyncTask<List<BookList>, Void, Integer> {
+        private static final int FAIL = 0;
+        private static final int SUCCESS = 1;
+        private static final int REPEAT = 2;
+        private BookList repeatBookList;
+
+        @Override
+        protected Integer doInBackground(List<BookList>... params) {
+            List<BookList> bookLists = params[0];
+            for (BookList bookList : bookLists) {
+                List<BookList> books = DataSupport.where("bookpath = ?", bookList.getBookpath()).find(BookList.class);
+                if (books.size() > 0) {
+                    repeatBookList = bookList;
+                    return REPEAT;
+                }
+            }
+
+            try {
+                DataSupport.saveAll(bookLists);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return FAIL;
+            }
+            return SUCCESS;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+            String msg = "";
+            switch (result) {
+                case FAIL:
+                    msg = "由于一些原因添加书本失败";
+                    break;
+                case SUCCESS:
+                    msg = "导入书本成功";
+                    checkItems.clear();
+                    bookLists = DataSupport.findAll(BookList.class);
+                    listAdapter.notifyDataSetChanged();
+                    changgeCheckBookNum();
+                    break;
+                case REPEAT:
+                    msg = "书本" + repeatBookList.getBookname() + "重复了";
+                    break;
+            }
+
+            Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 目录列表适配器
+     */
     private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
@@ -708,21 +785,23 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
+
+                //TextDetailDocumentsCell为自定义控件，用于listview中的每一个item
                 convertView = new TextDetailDocumentsCell(mContext);
             }
             TextDetailDocumentsCell textDetailCell = (TextDetailDocumentsCell) convertView;
             final ListItem item = items.get(position);
-            if (item.icon != 0) {
+            if (item.icon != 0) {      //如果item的icon不为0，即有icon，在listFiles函数中，文件夹item设置了icon，而TXT文件item没有设置icon，因此这里是在判断是否是文件夹
                 ((TextDetailDocumentsCell) convertView)
                         .setTextAndValueAndTypeAndThumb(item.title,
-                                item.subtitle, null, null, item.icon,false);
+                                item.subtitle, null, null, item.icon, false);    //isStorage属性表示的是是否已经被导入
             } else {
                 String type = item.ext.toUpperCase().substring(0,
                         Math.min(item.ext.length(), 4));
 
                 ((TextDetailDocumentsCell) convertView)
                         .setTextAndValueAndTypeAndThumb(item.title,
-                                item.subtitle, type, item.thumb, 0,isStorage(item.thumb));
+                                item.subtitle, type, item.thumb, 0, isStorage(item.thumb));
             }
 
             textDetailCell.getCheckBox().setOnCheckedChangeListener(null);
@@ -730,56 +809,52 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
             textDetailCell.getCheckBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
+                    if (isChecked) {     //如过被选中，则记录下当前item
                         checkItems.add(item);
-                    }else{
+                    } else {      //如果取消选中，则从记录中删除当前item
                         removeCheckItem(item.thumb);
                     }
                     changgeCheckBookNum();
                 }
             });
 
-            // if (item.file != null && actionBar.isActionModeShowed()) {
-            // textDetailCell.setChecked(selectedFiles.containsKey(item.file.toString()),
-            // !scrolling);
-            // } else {
-            // textDetailCell.setChecked(false, !scrolling);
-            // }
             return convertView;
         }
 
-        private boolean isCheck(String path){
-            for (ListItem item : checkItems){
-                if (item.thumb.equals(path)){
+        private boolean isCheck(String path) {
+            for (ListItem item : checkItems) {
+                if (item.thumb.equals(path)) {
                     return true;
                 }
             }
             return false;
         }
 
-        private void removeCheckItem(String path){
-            for (ListItem item : checkItems){
-                if (item.thumb.equals(path)){
+        private void removeCheckItem(String path) {
+            for (ListItem item : checkItems) {
+                if (item.thumb.equals(path)) {
                     checkItems.remove(item);
                     break;
                 }
             }
         }
 
-        private boolean isStorage(String path){
+        /**
+         * 是否被导入过
+         *
+         * @param path
+         * @return
+         */
+        private boolean isStorage(String path) {
             boolean isStore = false;
-            for (BookList bookList : bookLists){
-                if (bookList.getBookpath().equals(path)){
+            for (BookList bookList : bookLists) {
+                if (bookList.getBookpath().equals(path)) {
                     return true;
                 }
             }
 
             return false;
         }
-    }
-
-    public void finishFragment() {
-
     }
 
 }

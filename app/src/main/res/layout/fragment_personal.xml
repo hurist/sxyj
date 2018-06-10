@@ -17,13 +17,15 @@
             android:background="@drawable/line_bottom">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleimgHead"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/testhead"/>
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:src="@drawable/testhead" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,12 +34,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="空白格"/>
+                    android:text="空白格"
+                    android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/tvSign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -53,6 +57,7 @@
             android:background="@drawable/line_bottom">
 
             <LinearLayout
+                android:id="@+id/llMyMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,6 +90,7 @@
                 android:background="@color/gray" />
 
             <LinearLayout
+                android:id="@+id/llMyBookList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -119,11 +125,12 @@
             android:background="@drawable/lines_bottom_top">
 
             <LinearLayout
+                android:id="@+id/llReadHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"
@@ -152,11 +159,12 @@
             android:background="@drawable/lines_bottom_top">
 
             <LinearLayout
+                android:id="@+id/llUserFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"
@@ -185,11 +193,12 @@
             android:background="@drawable/lines_bottom_top">
 
             <LinearLayout
+                android:id="@+id/llCheckUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"
@@ -218,6 +227,7 @@
             android:background="@drawable/lines_bottom_top">
 
             <LinearLayout
+                android:id="@+id/llSetSkin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
@@ -251,11 +261,12 @@
             android:background="@drawable/lines_bottom_top">
 
             <LinearLayout
+                android:id="@+id/llSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="?android:attr/selectableItemBackground"
-                android:clickable="true">
+                android:clickable="true"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"

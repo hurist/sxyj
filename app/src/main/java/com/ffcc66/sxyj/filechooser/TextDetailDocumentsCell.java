@@ -24,10 +24,10 @@ import com.ffcc66.sxyj.util.AndroidUtilities;
 
 public class TextDetailDocumentsCell extends FrameLayout {
 
-    private TextView textView;
-    private TextView valueTextView;
-    private TextView typeTextView;
-    private TextView storageTextView;
+    private TextView textView;   //文件名或文件夹的名称
+    private TextView valueTextView; //“文件夹”或文件的大小
+    private TextView typeTextView;  //文件类型
+    private TextView storageTextView;   //“已导入”三个字的textview
     private ImageView imageView;
     private CheckBox checkBox;
 
@@ -132,11 +132,20 @@ public class TextDetailDocumentsCell extends FrameLayout {
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64), MeasureSpec.EXACTLY));
     }
 
+    /**
+     * 设置item属性
+     * @param text 名称
+     * @param value 属性（文件夹或文件大小）
+     * @param type 文件类型
+     * @param thumb 绝对路径
+     * @param resId 文件图标，只有文件夹有
+     * @param isStorage 是否被导入了
+     */
     public void setTextAndValueAndTypeAndThumb(String text, String value, String type, String thumb, int resId, boolean isStorage) {
-        textView.setText(text);
-        valueTextView.setText(value);
+        textView.setText(text);     //设置名称
+        valueTextView.setText(value);   //设置是文件夹或者文件的大小
 
-        if (type != null) {
+        if (type != null) { //type!=null 表示此item对应的是一个文件
             typeTextView.setVisibility(VISIBLE);
             typeTextView.setText(type);
 
