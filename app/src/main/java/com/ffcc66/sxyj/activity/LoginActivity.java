@@ -84,12 +84,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void initData() {
         List<BookList> books = DataSupport.findAll(BookList.class);
-        Log.d(TAG, "initData: "+books.size());
-        for (BookList book: books) {
-            Log.d(TAG, "initData: "+book.getBookname());
-            Log.d(TAG, "initData: "+book.getBookpath());
-            Log.d(TAG, "initData: "+book.getLastreadtime());
-        }
         etUsername.setHintTextColor(Color.WHITE);
         etPassword.setHintTextColor(Color.WHITE);
     }
@@ -107,7 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        HashMap<String,String> loginparams = new HashMap<String,String>();
+        final HashMap<String,String> loginparams = new HashMap<String,String>();
         loginparams.put("username",username);
         loginparams.put("password",password);
 
@@ -126,21 +120,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onResponse(String response, int id) {
 
-                        Gson gson = new Gson();
+                        Message msg = new Message();
                         EntityResponse<User> entityResponse = GsonUtil.GsonToBean(response,new TypeToken<EntityResponse<User>>(){}.getType());
 
                         if (entityResponse.getCode().equals("ok")) {
+
                             User user = (User) entityResponse.getObject();
-                            Message msg = new Message();
+                            if (user == null){
+                                msg.what = 0;
+                                mHandler.sendMessage(msg);
+                                return;
+                            }
                             msg.what = 1;
                             msg.obj = user.getUsername();
                             mHandler.sendMessage(msg);
-                        } else {
-
-                            Message msg = new Message();
-                            msg.what = 0;
-                            mHandler.sendMessage(msg);
-
+                            return;
                         }
                     }
                 });
@@ -151,8 +145,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (view.getId()) {
 
             case R.id.btnLogin:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-               // login();
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                login();
                 break;
             case R.id.tvRegister:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

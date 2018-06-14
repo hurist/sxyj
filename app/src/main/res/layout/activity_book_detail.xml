@@ -24,6 +24,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/ivCover"
                     android:layout_width="100dp"
                     android:layout_height="125dp"
                     android:layout_gravity="center_horizontal"
@@ -31,6 +32,7 @@
                     android:src="@drawable/test" />
 
                 <TextView
+                    android:id="@+id/tvBookname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -40,13 +42,14 @@
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/tvAuthorAndType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="3dp"
-                    android:textColor="@color/white"
-                    android:text="余华 * 文学" />
+                    android:text="余华 * 文学"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -62,6 +65,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvWordCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -87,6 +91,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvLookNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -112,6 +117,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvCollectionNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -158,6 +164,7 @@
             </LinearLayout>
 
             <cn.carbs.android.expandabletextview.library.ExpandableTextView
+                android:id="@+id/tvIntroduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -281,6 +288,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/llAddToBookcase"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -304,6 +312,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/llCommend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -327,6 +336,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/llRead"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/red"

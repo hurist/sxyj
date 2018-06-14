@@ -26,8 +26,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static android.support.constraint.Constraints.TAG;
-
 /**
  * 书架列表适配器
  */
@@ -36,6 +34,7 @@ public class BookCaseAdapter extends ArrayAdapter {
     protected List<AsyncTask<Void, Void, Boolean>> myAsyncTasks = new ArrayList<>();
     private List<BookList> bilist;
     private List<BookList> bilist1;
+    private static final String TAG = "BookCaseAdapter";
 
     private int resourceId;
     public BookCaseAdapter(Context context, int viewResouceId, List<BookList> bookList) {

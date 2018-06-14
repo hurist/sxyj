@@ -29,7 +29,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static android.support.constraint.Constraints.TAG;
 
 
 /**
@@ -44,6 +43,7 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
     private List<BookList> booklist = new ArrayList<BookList>();
     BookCaseAdapter bookCaseAdapter;
 
+    private static final String TAG = "BookCaseFragment";
     private boolean isCreate = false;
 
 

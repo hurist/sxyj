@@ -3,6 +3,7 @@ package com.ffcc66.sxyj.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,12 @@ import android.widget.TextView;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.entity.Book;
+import com.ffcc66.sxyj.response.entity.ResponseBook;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
 
 /**
  * 书城首页图书列表页适配器adapter
@@ -21,7 +26,7 @@ import java.util.List;
 public class BookStoreAdapter extends ArrayAdapter {
 
     private int resourceId;
-    public BookStoreAdapter(Context context, int viewResouceId, List<Book> bookList) {
+    public BookStoreAdapter(Context context, int viewResouceId, List<ResponseBook> bookList) {
         super(context,viewResouceId,bookList);
         this.resourceId = viewResouceId;
     }
@@ -29,7 +34,7 @@ public class BookStoreAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Book book = (Book) getItem(position);
+        ResponseBook book = (ResponseBook) getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -46,9 +51,11 @@ public class BookStoreAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.ivCover.setImageResource(book.getCover());
-        viewHolder.tvBookName.setText(book.getBookname());
-        viewHolder.tvWriter.setText(book.getWriter());
+        //viewHolder.ivCover.setImageResource(R.drawable.test);
+        Log.d(TAG, "getView: "+book.getCover_img());
+        Picasso.get().load(book.getCover_img()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
+        viewHolder.tvBookName.setText(book.getName());
+        viewHolder.tvWriter.setText(book.getAuthor());
         viewHolder.tvIntroduction.setText(book.getIntroduction());
 
         return view;

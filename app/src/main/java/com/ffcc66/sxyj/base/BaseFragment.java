@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 
-import static android.support.constraint.Constraints.TAG;
+//import static android.support.constraint.Constraints.TAG;
+
 
 
 /**
@@ -19,6 +20,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean isVisible;//标记当前Fragment是否被用户可见
     private View rootView;
+    private static final String TAG = "BaseFragment";
     /**
      * 初始化布局
      */
