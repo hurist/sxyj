@@ -283,6 +283,8 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                                     book.setIntroduction(obj.getString("introduction"));
                                     book.setCover_img(obj.getString("cover_img"));
                                     book.setFile(obj.getString("filename"));
+                                    Log.d(TAG, "onResponse: "+obj.getString("filename"));
+                                    Log.d(TAG, "onResponse: "+book.getFile());
                                     book.setType(obj.getString("type"));
                                     book.setWordcount(obj.getInt("wordcount"));
                                     book.setCollectionnum(obj.getInt("collectionnum"));

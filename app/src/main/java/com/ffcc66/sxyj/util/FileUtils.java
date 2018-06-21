@@ -1,5 +1,7 @@
 package com.ffcc66.sxyj.util;
 
+import android.util.Log;
+
 import org.mozilla.universalchardet.UniversalDetector;
 
 import java.io.File;
@@ -45,6 +47,7 @@ public class FileUtils {
      * @return
      */
     public static String getFileName(String pathandname){
+        Log.d("test", "getFileName: "+pathandname);
         int start=pathandname.lastIndexOf("/");
         int end=pathandname.lastIndexOf(".");
         if(start!=-1 && end!=-1){

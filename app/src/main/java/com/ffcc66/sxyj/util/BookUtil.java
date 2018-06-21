@@ -3,6 +3,7 @@ package com.ffcc66.sxyj.util;
 import android.content.ContentValues;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.ffcc66.sxyj.entity.BookCatalogue;
 import com.ffcc66.sxyj.entity.BookList;
@@ -243,10 +244,11 @@ public class BookUtil {
                 String bufStr = new String(buf);
                 String[] paragraphs = bufStr.split("\r\n");
                 for (String str : paragraphs) {
-                    if (str.length() <= 30 && (str.matches(".*第.{1,8}章.*") || str.matches(".*第.{1,8}节.*"))) {
+                    if (str.length() <= 30 && (str.matches("(^\\s*第)(.{1,9})[章节卷集部篇回](\\s{0})(.*)($\\s*)"))) {
                         BookCatalogue bookCatalogue = new BookCatalogue();
                         bookCatalogue.setBookCatalogueStartPos(size);
                         bookCatalogue.setBookCatalogue(str);
+                        Log.d("test1", "getChapter: "+str);
                         bookCatalogue.setBookpath(bookPath);
                         directoryList.add(bookCatalogue);
                     }

@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ffcc66.sxyj.R;
+import com.ffcc66.sxyj.ReadActivity;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
 import com.ffcc66.sxyj.adapter.BookDetailCommendAdapter;
+import com.ffcc66.sxyj.entity.BookList;
 import com.ffcc66.sxyj.entity.TempCommend;
 import com.ffcc66.sxyj.response.entity.ResponseBook;
 import com.squareup.picasso.Picasso;
@@ -53,11 +55,16 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     LinearLayout llAddToBookcase;
     @BindView(R.id.llCommend)
     LinearLayout llCommend;
+    @BindView(R.id.tvRead)
+    TextView tvRead;
+
 
     private List<TempCommend> tempCommends = new ArrayList<>();
 
     private ResponseBook responseBook;
     private static final String TAG = "BookDetailActivity";
+    private String bookpath;
+    private String coverpath;
 
 
     @Override
@@ -82,6 +89,18 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         tvBookname.setText(responseBook.getName());
         tvAuthorAndType.setText(responseBook.getAuthor()+"▪"+responseBook.getType());
 
+        bookpath = this.getExternalFilesDir("txt").getAbsolutePath()+"/"+ responseBook.getFile().split("/")[4];
+        coverpath = this.getExternalFilesDir("cover").getAbsolutePath()+"/"+ responseBook.getFile().split("/")[4];
+        if (fileIsCached(bookpath)) {
+            tvRead.setText("开始阅读"+"\n"+"（已缓存）");
+            llRead.setTag(true);
+        } else {
+            tvRead.setText("缓存到本地");
+            llRead.setTag(false);
+        }
+
+
+
         for (int i=0; i<10; i++) {
             TempCommend tempCommend = new TempCommend();
             tempCommend.setHeadimg(R.drawable.testhead);
@@ -103,6 +122,18 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llRead:
+                if ((Boolean) view.getTag()) {
+                    downloadCover();
+                    BookList book = new BookList();
+                    book.setBookname(responseBook.getName());
+                    book.setBookpath(bookpath);
+                    book.setCoverpath(coverpath);
+                    book.setType(-1);
+                    book.save();
+                    ReadActivity.openBook(book,BookDetailActivity.this);
+                }else {
+                    downloadingFile();
+                }
                 break;
         }
     }
@@ -111,7 +142,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         OkHttpUtils.get()
                 .url(responseBook.getFile())
                 .build()
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(),responseBook.getFile().split(".")[0]) {
+                .execute(new FileCallBack(this.getExternalFilesDir("txt").getAbsolutePath(),responseBook.getFile().split("/")[4]) {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Log.e(TAG, "onError: ",e );
@@ -119,13 +150,51 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
                     @Override
                     public void inProgress(float progress, long total, int id) {
-                        super.inProgress(progress, total, id);
+                        llRead.setClickable(false);
+                        tvRead.setText("正在缓存"+(100*progress)+"%");
                     }
 
                     @Override
                     public void onResponse(File response, int id) {
-
+                        llRead.setClickable(true);
+                        tvRead.setText("开始阅读"+"\n"+"（已缓存）");
+                        llRead.setTag(true);
                     }
                 });
+    }
+
+    private void downloadCover() {
+        OkHttpUtils.get()
+                .url(responseBook.getFile())
+                .build()
+                .execute(new FileCallBack(this.getExternalFilesDir("cover").getAbsolutePath(),responseBook.getCover_img().split("/")[4]) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e(TAG, "onError: ",e );
+                    }
+
+                    @Override
+                    public void onResponse(File response, int id) {
+                        Log.d(TAG, "onResponse:封面缓存完成 ");
+                    }
+                });
+    }
+
+
+    public boolean fileIsCached(String strFile)
+    {
+        try
+        {
+            File f=new File(strFile);
+            if(!f.exists())
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return true;
     }
 }

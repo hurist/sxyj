@@ -280,6 +280,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/llAddToBookcase"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -288,7 +289,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/llAddToBookcase"
+                android:id="@+id/tvAddToBookcase"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -304,6 +305,7 @@
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/llCommend"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -312,7 +314,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/llCommend"
+                android:id="@+id/tvCommend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -328,6 +330,7 @@
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/llRead"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -336,7 +339,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/llRead"
+                android:id="@+id/tvRead"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/red"

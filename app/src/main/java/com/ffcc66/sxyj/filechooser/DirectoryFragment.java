@@ -355,6 +355,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 String bookName = FileUtils.getFileName(item.thumb);
                 bookList.setBookname(bookName);
                 bookList.setBookpath(item.thumb);
+                bookList.setType(0);
                 bookLists.add(bookList);
             }
             SaveBookToSqlLiteTask mSaveBookToSqlLiteTask = new SaveBookToSqlLiteTask();
@@ -623,6 +624,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 String bookName = FileUtils.getFileName(path);
                 bookList.setBookname(bookName);
                 bookList.setBookpath(path);
+                bookList.setType(0);
 
                 boolean isSave = false;
                 for (BookList book : bookLists) {

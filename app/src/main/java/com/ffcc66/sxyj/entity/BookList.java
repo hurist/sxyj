@@ -17,6 +17,7 @@ public class BookList extends DataSupport implements Serializable {
     private float readprocess = (float) 0;
     private long lastreadtime;   //最后一次阅读的时间
     private String charset;     //文件编码
+    private int type;
 
     public String getBookname() {
         return this.bookname;
@@ -80,5 +81,13 @@ public class BookList extends DataSupport implements Serializable {
 
     public void setReadprocess(float readprocess) {
         this.readprocess = readprocess;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
