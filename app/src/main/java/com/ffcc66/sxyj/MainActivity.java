@@ -31,6 +31,11 @@ public class MainActivity extends BaseActivity {
 
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private String[] tabTitles = {"书架","书城","我"};
+    private BookCaseFragment bookCaseFragment = new BookCaseFragment();
+    private BookStoreFragment bookStoreFragment = new BookStoreFragment();
+    private PersonalFragment personalFragment = new PersonalFragment();
+
+
 
     @Override
     public int getLayoutRes() {
@@ -40,9 +45,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        fragmentList.add(new BookCaseFragment());
-        fragmentList.add(new BookStoreFragment());
-        fragmentList.add(new PersonalFragment());
+        fragmentList.add(bookCaseFragment);
+        fragmentList.add(bookStoreFragment);
+        fragmentList.add(personalFragment);
 
 
 
@@ -81,6 +86,13 @@ public class MainActivity extends BaseActivity {
             Log.d(TAG, "initData: "+book.getBookname());
             Log.d(TAG, "initData: "+book.getBookpath());
             Log.d(TAG, "initData: "+book.getLastreadtime());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (bookCaseFragment.onBackPressed_()) {
+            super.onBackPressed();
         }
     }
 }

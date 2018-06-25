@@ -8,13 +8,17 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String phone;
+    private String headimg;
+    private int sex;
 
-    public User(int id, String username, String password, String email, String phone) {
+    public User(int id, String username, String password, String email, String phone,String headimg,int sex) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.headimg = headimg;
+        this.sex = sex;
     }
 
     public int getId() {
@@ -55,5 +59,21 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 }

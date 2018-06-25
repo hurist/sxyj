@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ffcc66.sxyj.View.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/choose_selector"
     android:descendantFocusability="blocksDescendants">
 
     <ImageView
@@ -52,15 +53,14 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btnOperation"
-        android:layout_width="15dp"
-        android:layout_height="20dp"
+    <CheckBox
+        android:id="@+id/ckChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="10dp"
-        android:background="#00000000"
-        android:padding="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/item_dot" />
+        android:visibility="gone"
+        android:clickable="false"
+        android:layout_marginRight="15dp" />
 
-</LinearLayout>
+
+</com.ffcc66.sxyj.View.CheckableLinearLayout>

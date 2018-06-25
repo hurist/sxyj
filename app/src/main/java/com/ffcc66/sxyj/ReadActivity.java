@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
@@ -369,16 +370,39 @@ public class ReadActivity extends BaseActivity {
             if (isShow){
                 hideReadSetting();
                 return true;
-            }
-            if (mSettingDialog.isShowing()){
+            }else if (mSettingDialog.isShowing()){
                 mSettingDialog.hide();
                 return true;
-            }
-            if (mPageModeDialog.isShowing()){
+            } else if (mPageModeDialog.isShowing()){
                 mPageModeDialog.hide();
                 return true;
+            }else {
+                if(bookList.getType() == -1) {
+                    AlertDialog.Builder builder  = new AlertDialog.Builder(ReadActivity.this);
+                    builder.setTitle("添书" ) ;
+                    builder.setMessage("是否将本书添加到书架？" ) ;
+                    builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            bookList.setType(1);
+                            bookList.updateAll("id=?",""+bookList.getId());
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DataSupport.deleteAll(BookList.class,"id=?",""+bookList.getId());
+                            finish();
+                        }
+                    }) ;
+                    builder.show();
+                } else {
+                    finish();
+                }
+
             }
-            finish();
+
         }
         return super.onKeyDown(keyCode, event);
     }

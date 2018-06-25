@@ -68,4 +68,6 @@
     <!-- Navigation Color is 30% black mask attack to primary color -->
     <color name="myNavigationColor">#2E5CAB</color>
     <color name="myNavigationColorWhite">#B2B2B2</color>
+
+    <color name="choose_background">#e4ed6c6c</color>
 </resources>

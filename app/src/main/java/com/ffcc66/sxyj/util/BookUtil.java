@@ -306,7 +306,6 @@ public class BookUtil {
             }
             Cache cache = myArray.get(index);
             cache.setData(new WeakReference<char[]>(block));
-//            myArray.set(index, new WeakReference<char[]>(block));
         }
         return block;
     }

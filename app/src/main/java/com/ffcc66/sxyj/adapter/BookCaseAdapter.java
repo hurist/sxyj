@@ -1,6 +1,7 @@
 package com.ffcc66.sxyj.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.entity.BookList;
+import com.squareup.picasso.Picasso;
 
 import org.litepal.crud.DataSupport;
 import org.litepal.exceptions.DataSupportException;
@@ -35,6 +39,8 @@ public class BookCaseAdapter extends ArrayAdapter {
     private List<BookList> bilist;
     private List<BookList> bilist1;
     private static final String TAG = "BookCaseAdapter";
+    private Context context;
+    private Boolean choicemodel = false;
 
     private int resourceId;
     public BookCaseAdapter(Context context, int viewResouceId, List<BookList> bookList) {
@@ -42,9 +48,7 @@ public class BookCaseAdapter extends ArrayAdapter {
         this.resourceId = viewResouceId;
         bilist = bookList;
         bilist1 = bilist;
-
-        Log.d(TAG, "BookCaseAdapter:bilist = bookList? "+(bilist.equals(bookList)));
-        Log.d(TAG, "BookCaseAdapter: "+bilist);
+        this.context = context;
     }
 
     @NonNull
@@ -59,6 +63,7 @@ public class BookCaseAdapter extends ArrayAdapter {
             viewHolder.tvBookName = view.findViewById(R.id.tvBookName);
             viewHolder.tvLastReadTime = view.findViewById(R.id.tvLastReadTime);
             viewHolder.tvReadProcess = view.findViewById(R.id.tvReadProcess);
+            viewHolder.ckChecked = view.findViewById(R.id.ckChecked);
             view.setTag(viewHolder);
 
         } else {
@@ -70,10 +75,18 @@ public class BookCaseAdapter extends ArrayAdapter {
 
         if (bilist.get(position).getCoverpath() == null) {
             viewHolder.ivCover.setImageResource(R.drawable.test);
+        } else {
+            Picasso.get().load(bilist.get(position).getCoverpath()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
         }
         viewHolder.tvBookName.setText(bilist.get(position).getBookname());
         viewHolder.tvReadProcess.setText("阅读进度"+bilist.get(position).getReadprocess());
         viewHolder.tvLastReadTime.setText("上次阅读时间："+sp.format(new Date(bilist.get(position).getLastreadtime())));
+        if (choicemodel) {
+            viewHolder.ckChecked.setVisibility(View.VISIBLE);
+            viewHolder.ckChecked.setChecked(((ListView) parent).isItemChecked(position));
+        }else {
+            viewHolder.ckChecked.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -83,6 +96,7 @@ public class BookCaseAdapter extends ArrayAdapter {
         public TextView tvBookName;
         public TextView tvReadProcess;
         public TextView tvLastReadTime;
+        public CheckBox ckChecked;
     }
 
     /**
@@ -120,9 +134,8 @@ public class BookCaseAdapter extends ArrayAdapter {
     }
 
     public void setBookList(List<BookList> bookLists){
-        this.bilist = bookLists;
-        Log.d(TAG, "BookCaseAdapter:bilist = bilist1? "+bilist.equals(bilist1));
-        Log.d(TAG, "BookCaseAdapter: "+bilist);
+        this.bilist.clear();
+        this.bilist.addAll(bookLists);
         notifyDataSetChanged();
     }
     /**
@@ -191,5 +204,10 @@ public class BookCaseAdapter extends ArrayAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
+    }
+
+    public void setChoiceModel(Boolean choiceModel) {
+        this.choicemodel = choiceModel;
+        notifyDataSetChanged();
     }
 }

@@ -51,8 +51,6 @@ public class BookStoreAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        //viewHolder.ivCover.setImageResource(R.drawable.test);
-        Log.d(TAG, "getView: "+book.getCover_img());
         Picasso.get().load(book.getCover_img()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
         viewHolder.tvBookName.setText(book.getName());
         viewHolder.tvWriter.setText(book.getAuthor());

@@ -116,18 +116,15 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     }
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-        RequestData();
-        Log.d(TAG, "onCreate: size"+responsePopularBookList.size());
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//  //      RequestData();
+//    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_book_store,container,false);
         ButterKnife.bind(this,view);
         initData();
@@ -138,7 +135,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
 
     //初始化数据和加载数据
     protected void initData() {
-        Log.d(TAG, "initData: ");
         image.add(R.drawable.bannar_test1);
         image.add(R.drawable.bannar_test2);
 
@@ -217,7 +213,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                             JSONArray books = listresponse.getJSONArray("datas");
 
                             responsePopularBookList.clear();
-                            Log.d(TAG, "请求最热图书数据：数据条数："+(books.length()));
                             if (books != null) {
                                 for (int i=0; i<books.length(); i++) {
                                     JSONObject obj = (JSONObject) books.get(i);
@@ -240,7 +235,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                             } else {
                                 Toast.makeText(getActivity(), "请求数据失败...", Toast.LENGTH_LONG).show();
                             }
-                            Log.d(TAG, "onResponse:********* "+responsePopularBookList.size());
                             LoadingDialogUtils.closeDialog(dialog2);
 
                         } catch (JSONException e) {
@@ -271,7 +265,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                             JSONArray books = listresponse.getJSONArray("datas");
 
                             responseNewBookList.clear();
-                            Log.d(TAG, "请求新书推荐数据：数据条数："+(books.length()));
                             if (books != null) {
                                 for (int i=0; i<books.length(); i++) {
                                     JSONObject obj = (JSONObject) books.get(i);
@@ -283,8 +276,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                                     book.setIntroduction(obj.getString("introduction"));
                                     book.setCover_img(obj.getString("cover_img"));
                                     book.setFile(obj.getString("filename"));
-                                    Log.d(TAG, "onResponse: "+obj.getString("filename"));
-                                    Log.d(TAG, "onResponse: "+book.getFile());
                                     book.setType(obj.getString("type"));
                                     book.setWordcount(obj.getInt("wordcount"));
                                     book.setCollectionnum(obj.getInt("collectionnum"));
@@ -311,5 +302,16 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
 
 
 
+    }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RequestData();
     }
 }
