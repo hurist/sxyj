@@ -21,6 +21,8 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
+    public User() {}
+
     public int getId() {
         return id;
     }

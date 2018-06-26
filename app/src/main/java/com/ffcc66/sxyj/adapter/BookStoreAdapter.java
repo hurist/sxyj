@@ -16,6 +16,7 @@ import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.response.entity.ResponseBook;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
@@ -26,15 +27,16 @@ import static com.zhy.http.okhttp.log.LoggerInterceptor.TAG;
 public class BookStoreAdapter extends ArrayAdapter {
 
     private int resourceId;
+    private List<ResponseBook> responseBookList;
     public BookStoreAdapter(Context context, int viewResouceId, List<ResponseBook> bookList) {
         super(context,viewResouceId,bookList);
         this.resourceId = viewResouceId;
+        this.responseBookList = bookList;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ResponseBook book = (ResponseBook) getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -51,10 +53,10 @@ public class BookStoreAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        Picasso.get().load(book.getCover_img()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
-        viewHolder.tvBookName.setText(book.getName());
-        viewHolder.tvWriter.setText(book.getAuthor());
-        viewHolder.tvIntroduction.setText(book.getIntroduction());
+        Picasso.get().load(responseBookList.get(position).getCover_img()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
+        viewHolder.tvBookName.setText(responseBookList.get(position).getName());
+        viewHolder.tvWriter.setText(responseBookList.get(position).getAuthor());
+        viewHolder.tvIntroduction.setText(responseBookList.get(position).getIntroduction());
 
         return view;
     }
@@ -64,5 +66,13 @@ public class BookStoreAdapter extends ArrayAdapter {
         public TextView tvBookName;
         public TextView tvWriter;
         public TextView tvIntroduction;
+    }
+
+    public void setBookList(List<ResponseBook> responseBooks){
+
+        responseBookList.clear();
+        responseBookList.addAll(responseBooks);
+        Log.d("BookStoreAdapter", "setBookList: "+responseBooks.size()+"...."+responseBookList.size());
+        notifyDataSetChanged();
     }
 }

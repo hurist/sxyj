@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.BookCategaryListActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.widget.Toolbar
+        android:id="@+id/toolbarCategaryList"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/line_bottom_red"
+        android:navigationIcon="@drawable/ic_activity_close_white"
+        style="@style/ThemeOverlay.AppCompat.Dark"
+        android:textAlignment="center">
+
+    </android.widget.Toolbar>
+
+    <ListView
+        android:layout_weight="1"
+        android:id="@+id/lvCategaryList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvEmptyListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List view is empty"
+        android:visibility="gone" />
+
+</LinearLayout>

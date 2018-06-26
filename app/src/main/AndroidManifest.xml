@@ -52,10 +52,11 @@
         <activity
             android:name=".filechooser.FileChooserActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ReadActivity" />
         <activity android:name=".activity.MarkActivity" />
-        <activity android:name=".activity.EditInformationActivity"></activity>
+        <activity android:name=".activity.EditInformationActivity" />
+        <activity android:name=".activity.SecurityQuestionActivity"></activity>
     </application>
 
 </manifest>

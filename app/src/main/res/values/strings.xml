@@ -95,4 +95,6 @@
         <item>nannan</item>
         <item>vils</item>
     </string-array>
+
+    <string name="filter_vcode">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_</string>
 </resources>

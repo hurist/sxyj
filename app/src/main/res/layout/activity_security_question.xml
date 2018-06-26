@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SecurityQuestionActivity">
+
+    <android.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/line_bottom"
+        android:navigationIcon="@drawable/ic_activity_close_black"
+        android:textAlignment="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="注册账号"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+    </android.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etQuestion"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:minHeight="40dp"
+            android:hint="请输入你的密保问题"
+            android:maxLength="30"
+            android:background="@drawable/editshape"
+            android:maxLines="4"/>
+
+        <EditText
+            android:id="@+id/etAnswer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="top"
+            android:singleLine="false"
+            android:minLines="6"
+            android:hint="请输入答案"
+            android:maxLength="30"
+            android:background="@drawable/editshape"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/btn_login"
+            android:text="确  认"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
