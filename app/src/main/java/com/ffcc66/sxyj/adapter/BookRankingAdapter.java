@@ -15,7 +15,12 @@ import android.widget.TextView;
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.entity.TempCommend;
+import com.ffcc66.sxyj.response.entity.ResponseBook;
+import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,16 +29,18 @@ import java.util.List;
 public class BookRankingAdapter extends ArrayAdapter {
 
     private int resourceId;
-    public BookRankingAdapter(Context context, int viewResouceId, List<Book> books) {
+    private List<ResponseBook> responseBookList = new ArrayList<>();
+    private String numtype = "收藏数：";
+    public BookRankingAdapter(Context context, int viewResouceId, List<ResponseBook> books) {
         super(context,viewResouceId,books);
         this.resourceId = viewResouceId;
+        this.responseBookList = books;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Log.d("aaaaaaaaa", "getView: "+position);
-        Book book = (Book) getItem(position);
+
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -42,7 +49,8 @@ public class BookRankingAdapter extends ArrayAdapter {
             viewHolder.ivCover = view.findViewById(R.id.ivCover);
             viewHolder.tvBookName = view.findViewById(R.id.tvBookName);
             viewHolder.tvWriter = view.findViewById(R.id.tvWriter);
-            viewHolder.tvCollectionNum = view.findViewById(R.id.tvCollectionNum);
+            viewHolder.tvNumType = view.findViewById(R.id.tvNumType);
+            viewHolder.tvNum = view.findViewById(R.id.tvNum);
             viewHolder.tvIntroduction = view.findViewById(R.id.tvIntroduction);
             viewHolder.tvRankingNum = view.findViewById(R.id.tvRankingNum);
             view.setTag(viewHolder);
@@ -52,12 +60,12 @@ public class BookRankingAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.ivCover.setImageResource(book.getCover());
-        viewHolder.tvBookName.setText(book.getBookname());
-        viewHolder.tvWriter.setText(book.getWriter());
-        viewHolder.tvCollectionNum.setText(book.getCollectionNum());
-        viewHolder.tvIntroduction.setText(book.getIntroduction());
-        viewHolder.tvRankingNum.setText(book.getRankingNum());
+        Picasso.get().load(responseBookList.get(position).getCover_img()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
+        viewHolder.tvBookName.setText(responseBookList.get(position).getName().trim());
+        viewHolder.tvWriter.setText(responseBookList.get(position).getAuthor());
+        viewHolder.setNumAndType(numtype, responseBookList.get(position));
+        viewHolder.tvIntroduction.setText(responseBookList.get(position).getIntroduction());
+        viewHolder.tvRankingNum.setText(""+(position+1));
 
         switch (position) {
             default:
@@ -81,8 +89,38 @@ public class BookRankingAdapter extends ArrayAdapter {
         public ImageView ivCover;
         public TextView tvBookName;
         public TextView tvWriter;
-        public TextView tvCollectionNum;
+        public TextView tvNumType;
+        public TextView tvNum;
         public TextView tvIntroduction;
         public TextView tvRankingNum;
+
+        public void setNumAndType(String type, ResponseBook responseBook) {
+            switch (type) {
+                case "收藏数：":
+                    tvNumType.setText(type);
+                    tvNum.setText(""+responseBook.getCollectionnum());
+                    break;
+                case "搜索数：":
+                    tvNumType.setText(type);
+                    tvNum.setText(""+responseBook.getCollectionnum());
+                    break;
+                case "评论数：":
+                    tvNumType.setText(type);
+                    tvNum.setText(""+responseBook.getCollectionnum());
+                    break;
+                case "点击数：":
+                    tvNumType.setText(type);
+                    tvNum.setText(""+responseBook.getLooknum());
+                    break;
+                case "字数：":
+                    tvNumType.setText(type);
+                    tvNum.setText(""+responseBook.getWordcount());
+                    break;
+            }
+        }
+    }
+
+    public void setNumType(String numtype) {
+        this.numtype = numtype;
     }
 }

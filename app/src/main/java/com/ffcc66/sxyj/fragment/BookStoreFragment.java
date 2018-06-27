@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.ffcc66.sxyj.MainActivity;
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.View.ListViewForScrollView;
@@ -80,6 +82,8 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     TextView tvPopularName2;
     @BindView(R.id.tvPopularName3)
     TextView tvPopularName3;
+    @BindView(R.id.bookstorerefersh)
+    MaterialRefreshLayout bookstorerefersh;
 
     private List image = new ArrayList();
     private List<Book> books = new ArrayList<>();
@@ -163,6 +167,12 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
         llRanking.setOnClickListener(this);
         llCategary.setOnClickListener(this);
         llBookList.setOnClickListener(this);
+        bookstorerefersh.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                RequestData(true);
+            }
+        });
 
     }
 
@@ -190,10 +200,13 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
         }
     }
 
-    public void RequestData() {
+    public void RequestData(boolean isRefersh) {
 
-        dialog1 = LoadingDialogUtils.createLoadingDialog(getActivity(), "加载中，请稍等");
-        dialog1.show();
+
+        if (!isRefersh) {
+            dialog1 = LoadingDialogUtils.createLoadingDialog(getActivity(), "加载中，请稍等");
+            dialog1.show();
+        }
         OkHttpUtils.get()
                 .url("http://192.168.137.1:8080/SXYJApi/BookService/getPopularBook")
                 .addParams("num","3")
@@ -204,6 +217,7 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                         LoadingDialogUtils.closeDialog(dialog2);
                         Toast.makeText(getActivity(), "ERROR:请求数据失败...",
                                 Toast.LENGTH_LONG).show();
+                        bookstorerefersh.finishRefresh();
                     }
 
                     @Override
@@ -243,8 +257,10 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                     }
                 });
 
-        dialog2 = LoadingDialogUtils.createLoadingDialog(getActivity(), "加载中，请稍等");
-        dialog2.show();
+        if (!isRefersh) {
+            dialog2 = LoadingDialogUtils.createLoadingDialog(getActivity(), "加载中，请稍等");
+            dialog2.show();
+        }
         OkHttpUtils.get()
                 .url("http://192.168.137.1:8080/SXYJApi/BookService/getNewBook")
                 .addParams("num", "10")
@@ -255,6 +271,7 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                         LoadingDialogUtils.closeDialog(dialog1);
                         Toast.makeText(getActivity(), "ERROR:请求数据失败...",
                                 Toast.LENGTH_LONG).show();
+                        bookstorerefersh.finishRefresh();
                     }
 
                     @Override
@@ -284,6 +301,7 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
 
                                     responseNewBookList.add(book);
                                 }
+                                bookStoreAdapter.notifyDataSetChanged();
                                 Message message = new Message();
                                 message.what = 0;
                                 mHandler.sendMessage(message);
@@ -291,7 +309,7 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                                 Toast.makeText(getActivity(), "请求数据失败...", Toast.LENGTH_LONG).show();
                             }
                             LoadingDialogUtils.closeDialog(dialog1);
-
+                            bookstorerefersh.finishRefresh();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -312,6 +330,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     @Override
     public void onResume() {
         super.onResume();
-        RequestData();
+        RequestData(false);
     }
 }

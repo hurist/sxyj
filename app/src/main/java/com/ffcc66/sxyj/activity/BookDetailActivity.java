@@ -149,7 +149,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llRead:
-                addLookNum();
+                addNum("looknum", responseBook.getId());
                 if ((Boolean) view.getTag()) {
 
                     List<BookList> bookLists = DataSupport.where("bookname = ? and writer = ?", responseBook.getName(), responseBook.getAuthor()).find(BookList.class);
@@ -191,7 +191,9 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                                     book.setCoverpath(responseBook.getCover_img());
                                     book.setType(1);
                                     book.save();
+                                    addNum("collectionnum", responseBook.getId());
                                     tvAddToBookcase.setText("取消收藏");
+                                    updateBookInfo();
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -285,10 +287,11 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                 });
     }
 
-    public void addLookNum(){
+    public static void addNum(String type, int id){
 
-        OkHttpUtils.get().url("http://192.168.137.1:8080/SXYJApi/BookService/addLookNum")
-                .addParams("id",""+responseBook.getId()).build().execute(new StringCallback() {
+        OkHttpUtils.get().url("http://192.168.137.1:8080/SXYJApi/BookService/addNum")
+                .addParams("id",""+id)
+                .addParams("type",type).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.e(TAG, "onError: ",e );

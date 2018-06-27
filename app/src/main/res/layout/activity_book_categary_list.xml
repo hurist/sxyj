@@ -18,13 +18,29 @@
 
     </android.widget.Toolbar>
 
-    <ListView
+    <com.cjj.MaterialRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_weight="1"
-        android:id="@+id/lvCategaryList"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:id="@+id/refresh"
+        app:overlay="false"
+        app:wave_show="true"
+        app:wave_color="@color/white"
+        app:wave_height_type="normal"
+    >
 
-    </ListView>
+        <ListView
+            android:id="@+id/lvCategaryList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+    </com.cjj.MaterialRefreshLayout>
+
+
 
     <TextView
         android:id="@+id/tvEmptyListView"

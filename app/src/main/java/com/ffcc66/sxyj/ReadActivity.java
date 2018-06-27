@@ -36,6 +36,7 @@ import android.widget.Toast;
 //import com.baidu.tts.client.SpeechSynthesizerListener;
 //import com.baidu.tts.client.TtsMode;
 import com.ffcc66.sxyj.View.PageWidget;
+import com.ffcc66.sxyj.activity.BookDetailActivity;
 import com.ffcc66.sxyj.activity.MarkActivity;
 import com.ffcc66.sxyj.base.BaseActivity;
 import com.ffcc66.sxyj.dialog.PageModeDialog;
@@ -385,6 +386,7 @@ public class ReadActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             bookList.setType(1);
+                            BookDetailActivity.addNum("collectionnum",bookList.getBookid());
                             bookList.updateAll("id=?",""+bookList.getId());
                             finish();
                         }
@@ -398,6 +400,11 @@ public class ReadActivity extends BaseActivity {
                     }) ;
                     builder.show();
                 } else {
+                    if ((DataSupport.find(BookList.class, bookList.getId())) != null) {
+                        Log.d(TAG, "onKeyDown: 设置了时间");
+                        bookList.setLastreadtime(new Date().getTime());
+                        bookList.updateAll("id=?",""+bookList.getId());
+                    }
                     finish();
                 }
 

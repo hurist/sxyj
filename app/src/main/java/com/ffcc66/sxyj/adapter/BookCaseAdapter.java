@@ -106,12 +106,16 @@ public class BookCaseAdapter extends ArrayAdapter {
      */
     public void updateBookPosition (int position,int databaseId,List<BookList> bookLists) {
         BookList bookList = new BookList();
-        String bookpath = bookLists.get(position).getBookpath();
-        String bookname = bookLists.get(position).getBookname();
-        bookList.setBookpath(bookpath);
-        bookList.setBookname(bookname);
+        bookList.setBookpath(bookLists.get(position).getBookpath());
+        bookList.setBookname(bookLists.get(position).getBookname());
         bookList.setBegin(bookLists.get(position).getBegin());
         bookList.setCharset(bookLists.get(position).getCharset());
+        bookList.setLastreadtime(bookLists.get(position).getLastreadtime());
+        bookList.setWriter(bookLists.get(position).getWriter());
+        bookList.setBookid(bookLists.get(position).getBookid());
+        bookList.setType(bookLists.get(position).getType());
+        bookList.setReadprocess(bookLists.get(position).getReadprocess());
+        bookList.setCoverpath(bookLists.get(position).getCoverpath());
         //开线程保存改动的数据到数据库
         //使用litepal数据库框架update时每次只能update一个id中的一条信息，如果相同则不更新。
         upDateBookToSqlite3(databaseId , bookList);

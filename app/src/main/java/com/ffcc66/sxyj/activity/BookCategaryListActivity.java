@@ -7,11 +7,15 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.adapter.BookStoreAdapter;
 import com.ffcc66.sxyj.response.entity.ResponseBook;
@@ -43,12 +47,16 @@ public class BookCategaryListActivity extends AppCompatActivity {
     @BindView(R.id.tvEmptyListView)
     TextView tvEmptyListView;
     Dialog dialog;
-
+    @BindView(R.id.refresh)
+    MaterialRefreshLayout refersh;
 
 
     private String type;
     private List<ResponseBook> responseBookList = new ArrayList<>();
     private BookStoreAdapter bookStoreAdapter;
+    private int pagenum = 1;
+    private boolean isRefershAndLoadMore = false;
+    private boolean canLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +66,42 @@ public class BookCategaryListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ButterKnife.bind(this);
         type = intent.getStringExtra("type");
-
         intitDate();
+        initListener();
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getCategaryDatas(1, type);
+    private void initListener() {
+
+        refersh.setLoadMore(true);
+        refersh.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                isRefershAndLoadMore = true;
+                pagenum = 1;
+                getCategaryDatas(1, type, isRefershAndLoadMore);
+            }
+
+            @Override
+            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
+                super.onRefreshLoadMore(materialRefreshLayout);
+                isRefershAndLoadMore = true;
+                pagenum = pagenum + 1;
+                getCategaryDatas(pagenum, type, isRefershAndLoadMore);
+
+            }
+        });
+
+        lvCategaryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ResponseBook book = (ResponseBook) bookStoreAdapter.getItem(i);
+                Intent intent = new Intent(BookCategaryListActivity.this, BookDetailActivity.class);
+                intent.putExtra("bookinfo",book);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void intitDate() {
@@ -75,15 +110,15 @@ public class BookCategaryListActivity extends AppCompatActivity {
         toolbar.setTitle(type);
         toolbar.setTitleTextColor(Color.WHITE);
         setActionBar(toolbar);
-
         bookStoreAdapter = new BookStoreAdapter(BookCategaryListActivity.this,
                 R.layout.item_fragment_book_store, responseBookList);
         lvCategaryList.setAdapter(bookStoreAdapter);
+        getCategaryDatas(1, type, isRefershAndLoadMore);
     }
 
-    public void getCategaryDatas(final int pagenum, String type) {
+    public void getCategaryDatas(final int pagenum, String type, boolean isRefershAndLoadMore) {
 
-        if (pagenum == 1) {
+        if (pagenum==1 && (!isRefershAndLoadMore)) {
             dialog = LoadingDialogUtils.createLoadingDialog(BookCategaryListActivity.this,
                     "加载中");
             dialog.show();
@@ -103,6 +138,7 @@ public class BookCategaryListActivity extends AppCompatActivity {
                         if (dialog != null) {
                             LoadingDialogUtils.closeDialog(dialog);
                         }
+                        refersh.finishRefresh();
                     }
 
                     @Override
@@ -113,8 +149,10 @@ public class BookCategaryListActivity extends AppCompatActivity {
                             if (pagenum == 1) {
                                 responseBookList.clear();
                             }
+                            Log.d("777777777", "onResponse: "+(books==null));
                             List<ResponseBook> templist = new ArrayList<>();
                             if (books != null) {
+                                if (books.length() == 0) { Toast.makeText(BookCategaryListActivity.this, "已经没有更多数据了...", Toast.LENGTH_SHORT).show();}
                                 for (int i=0; i<books.length(); i++) {
                                     JSONObject obj = (JSONObject) books.get(i);
                                     ResponseBook book = new ResponseBook();
@@ -139,6 +177,8 @@ public class BookCategaryListActivity extends AppCompatActivity {
                             responseBookList.addAll(templist);
                             bookStoreAdapter.notifyDataSetChanged();
                             LoadingDialogUtils.closeDialog(dialog);
+                            refersh.finishRefreshLoadMore();
+                            refersh.finishRefresh();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ffcc66.sxyj.fragment.BookStoreFragment">
 
     <LinearLayout
@@ -35,285 +36,298 @@
 
         </android.widget.Toolbar>
 
-        <ScrollView
+        <com.cjj.MaterialRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bookstorerefersh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
+            android:layout_weight="1"
+            app:overlay="true"
+            app:wave_show="true"
+            app:wave_color="#90ffffff"
+            app:progress_colors="@array/material_colors"
+            app:wave_height_type="higher">
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <com.youth.banner.Banner
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="111dp" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/line_bottom"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/llCategary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_booktype" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:text="分类"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-                    <TextView
-                        android:layout_width="1px"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/gray"/>
-
-                    <LinearLayout
-                        android:id="@+id/llRanking"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_bookrinking" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:text="排行"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-                    <TextView
-                        android:layout_width="1px"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/gray"/>
-
-                    <LinearLayout
-                        android:id="@+id/llBookList"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="15dp"
-                            android:src="@drawable/ic_booklist" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:text="书单"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:background="@drawable/line_bottom"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:text="人气推荐"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="更多>"/>
-
-                    </LinearLayout>
+                        android:layout_height="111dp" />
 
                     <LinearLayout
-                        android:paddingTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/llCategary"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/ivPopularCover1"
-                                android:layout_width="75dp"
-                                android:layout_height="100dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@drawable/test" />
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="15dp"
+                                android:src="@drawable/ic_booktype" />
 
                             <TextView
-                                android:id="@+id/tvPopularName1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:paddingTop="10dp"
-                                android:text="爱你就像爱自己" />
+                                android:layout_marginBottom="10dp"
+                                android:text="分类"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
 
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="1px"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/gray"/>
 
                         <LinearLayout
+                            android:id="@+id/llRanking"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/ivPopularCover2"
-                                android:layout_width="75dp"
-                                android:layout_height="100dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@drawable/test" />
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="15dp"
+                                android:src="@drawable/ic_bookrinking" />
 
                             <TextView
-                                android:id="@+id/tvPopularName2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:paddingTop="10dp"
-                                android:text="爱你就像爱自己" />
+                                android:layout_marginBottom="10dp"
+                                android:text="排行"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
 
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="1px"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/gray"/>
 
                         <LinearLayout
+                            android:id="@+id/llBookList"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/ivPopularCover3"
-                                android:layout_width="75dp"
-                                android:layout_height="100dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_gravity="center_horizontal"
-                                android:src="@drawable/test" />
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="15dp"
+                                android:src="@drawable/ic_booklist" />
 
                             <TextView
-                                android:id="@+id/tvPopularName3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:paddingTop="10dp"
-                                android:text="爱你就像爱自己" />
+                                android:layout_marginBottom="10dp"
+                                android:text="书单"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
 
                         </LinearLayout>
-
 
                     </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:descendantFocusability="blocksDescendants"
-                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp">
+                        android:paddingTop="15dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:background="@drawable/line_bottom"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:text="新书推荐"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:text="人气推荐"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="更多>"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:paddingTop="15dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="更多>"/>
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/ivPopularCover1"
+                                    android:layout_width="75dp"
+                                    android:layout_height="100dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/test" />
+
+                                <TextView
+                                    android:id="@+id/tvPopularName1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:paddingTop="10dp"
+                                    android:text="爱你就像爱自己" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/ivPopularCover2"
+                                    android:layout_width="75dp"
+                                    android:layout_height="100dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/test" />
+
+                                <TextView
+                                    android:id="@+id/tvPopularName2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:paddingTop="10dp"
+                                    android:text="爱你就像爱自己" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/ivPopularCover3"
+                                    android:layout_width="75dp"
+                                    android:layout_height="100dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/test" />
+
+                                <TextView
+                                    android:id="@+id/tvPopularName3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:paddingTop="10dp"
+                                    android:text="爱你就像爱自己" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <com.ffcc66.sxyj.View.ListViewForScrollView
-                        android:id="@+id/lvNewBookRecommend"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:descendantFocusability="blocksDescendants"
+                        android:orientation="vertical">
 
-                    </com.ffcc66.sxyj.View.ListViewForScrollView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:text="新书推荐"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="更多>"/>
+
+                        </LinearLayout>
+
+                        <com.ffcc66.sxyj.View.ListViewForScrollView
+                            android:id="@+id/lvNewBookRecommend"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </com.ffcc66.sxyj.View.ListViewForScrollView>
 
 
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </ScrollView>
+        </com.cjj.MaterialRefreshLayout>
 
-        </ScrollView>
 
     </LinearLayout>
 

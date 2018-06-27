@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.ReadActivity;
+import com.ffcc66.sxyj.activity.BookDetailActivity;
 import com.ffcc66.sxyj.base.BaseFragment;
 import com.ffcc66.sxyj.adapter.BookCaseAdapter;
 import com.ffcc66.sxyj.dialog.DeleteDialog;
@@ -143,7 +144,7 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
 
         switch (item.getItemId()){
             case 0:
-                Intent intent = new Intent();
+                Intent intent = new Intent(getContext(), BookDetailActivity.class);
                 intent.putExtra("bookinfo",tempbook);
                 startActivity(intent);
                 break;

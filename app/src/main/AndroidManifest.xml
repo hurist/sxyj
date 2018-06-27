@@ -36,15 +36,18 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.BookDetailActivity" />
+        <activity android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".activity.BookDetailActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".activity.BookCategaryActivity" />
         <activity android:name=".activity.BookRankingActivity" />
         <activity android:name=".activity.BookListActivity" />

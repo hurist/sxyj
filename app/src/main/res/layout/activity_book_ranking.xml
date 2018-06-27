@@ -104,6 +104,19 @@
                         android:textSize="18sp" />
 
                     <RadioButton
+                        android:id="@+id/rbWordCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/line_bottom"
+                        android:button="@null"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="字数榜"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/ranking_radio_selector"
+                        android:textSize="18sp" />
+
+                    <RadioButton
                         android:id="@+id/rbNewBook"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,6 +136,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_weight="9">
 
                 <ListView
@@ -131,6 +145,14 @@
                     android:layout_height="match_parent">
 
                 </ListView>
+
+                <TextView
+                    android:id="@+id/tvRankListEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="暂无数据"/>
 
             </LinearLayout>
 

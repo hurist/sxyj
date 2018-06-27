@@ -18,6 +18,8 @@ public class BookCategaryActivity extends AppCompatActivity implements View.OnCl
 
     @BindView(R.id.llForeignLiterature)
     LinearLayout llForeignLiterature;
+    @BindView(R.id.llXDDWX)
+    LinearLayout llXDDWX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class BookCategaryActivity extends AppCompatActivity implements View.OnCl
 
     private void initListener() {
 
+        llXDDWX.setOnClickListener(this);
         llForeignLiterature.setOnClickListener(this);
 
     }
