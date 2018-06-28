@@ -2,11 +2,12 @@
 <litepal>
     <dbname value="book" ></dbname>
 
-    <version value="7" ></version>
+    <version value="9" ></version>
 
     <list>
         <mapping class="com.ffcc66.sxyj.entity.BookList"></mapping>
         <mapping class="com.ffcc66.sxyj.entity.BookMarks"></mapping>
         <mapping class="com.ffcc66.sxyj.entity.BookCatalogue"></mapping>
+        <mapping class="com.ffcc66.sxyj.entity.SearchHistory"></mapping>
     </list>
 </litepal>

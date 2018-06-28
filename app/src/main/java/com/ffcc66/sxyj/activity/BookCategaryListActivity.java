@@ -129,12 +129,13 @@ public class BookCategaryListActivity extends AppCompatActivity {
                 .addParams("pagenum",""+pagenum)
                 .addParams("type", type)
                 .build()
+                .connTimeOut(5000)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Log.w("BookCategaryListActivit", "onError: ", e);
                         Toast.makeText(BookCategaryListActivity.this,
-                                "网络错误", Toast.LENGTH_SHORT);
+                                "网络错误", Toast.LENGTH_SHORT).show();
                         if (dialog != null) {
                             LoadingDialogUtils.closeDialog(dialog);
                         }
@@ -149,7 +150,6 @@ public class BookCategaryListActivity extends AppCompatActivity {
                             if (pagenum == 1) {
                                 responseBookList.clear();
                             }
-                            Log.d("777777777", "onResponse: "+(books==null));
                             List<ResponseBook> templist = new ArrayList<>();
                             if (books != null) {
                                 if (books.length() == 0) { Toast.makeText(BookCategaryListActivity.this, "已经没有更多数据了...", Toast.LENGTH_SHORT).show();}

@@ -33,6 +33,8 @@ import com.ffcc66.sxyj.adapter.BookCaseAdapter;
 import com.ffcc66.sxyj.dialog.DeleteDialog;
 import com.ffcc66.sxyj.entity.BookList;
 import com.ffcc66.sxyj.filechooser.FileChooserActivity;
+import com.ffcc66.sxyj.response.Response;
+import com.ffcc66.sxyj.response.entity.ResponseBook;
 
 import org.litepal.crud.DataSupport;
 
@@ -83,13 +85,12 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initData(View view) {
+
         setHasOptionsMenu(true);
 
         toolbar.setTitle("");
         //getActivity().setActionBar(toolbar);   使用这句后无法显示menu
         toolbar.inflateMenu(R.menu.menu_bookcase);
-        //((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //toolbar.getMenu().findItem(R.id.itemScan).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS); 设置showAsAction无效时使用
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(),R.drawable.bookcase_manager));
         toolbar.setOnMenuItemClickListener(this);
         //初始化书架数据
@@ -145,7 +146,20 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
         switch (item.getItemId()){
             case 0:
                 Intent intent = new Intent(getContext(), BookDetailActivity.class);
-                intent.putExtra("bookinfo",tempbook);
+
+                ResponseBook book = new ResponseBook();
+                book.setId(tempbook.getBookid());
+                book.setName(tempbook.getBookname());
+                book.setType("");
+                book.setFile(tempbook.getFileURL());
+                book.setCover_img("http://192.168.137.1:8080/images/test.jpg");
+                book.setCollectionnum(0);
+                book.setWordcount(0);
+                book.setIntroduction("");
+                book.setSearchnum(0);
+                book.setAuthor(tempbook.getWriter());
+
+                intent.putExtra("bookinfo",book);
                 startActivity(intent);
                 break;
             case 1:

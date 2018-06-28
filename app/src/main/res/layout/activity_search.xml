@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SearchActivity">
+
+
+    <android.widget.Toolbar
+        android:id="@+id/searchToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/toolbar_singleline_bottom"
+        android:layout_gravity="top"
+        android:navigationIcon="@drawable/back"
+
+        style="@style/searchToolbar"
+        android:contentInsetStartWithNavigation="0dp"
+        android:textAlignment="center">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:queryHint="书名/作者"
+            android:searchIcon="@drawable/search"
+            android:searchHintIcon="@null"
+            android:layout_marginRight="40dp">
+
+        </SearchView>
+
+    </android.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/llSearchContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="搜索历史"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:scaleType="centerCrop"
+                android:layout_marginRight="3dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/delete"/>
+            <TextView
+                android:id="@+id/tvDeleteHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:text="清空历史"/>
+
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lvSearchHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:layout_weight="1">
+        </ListView>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvSearchResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_weight="1">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/searchHistoryEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="暂无数据"/>
+
+    <TextView
+        android:id="@+id/searchResuleEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="暂无数据"/>
+
+
+</RelativeLayout>

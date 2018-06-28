@@ -9,15 +9,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -27,6 +34,7 @@ import com.ffcc66.sxyj.View.ListViewForScrollView;
 import com.ffcc66.sxyj.activity.BookDetailActivity;
 import com.ffcc66.sxyj.activity.BookRankingActivity;
 import com.ffcc66.sxyj.activity.LoginActivity;
+import com.ffcc66.sxyj.activity.SearchActivity;
 import com.ffcc66.sxyj.adapter.BookStoreAdapter;
 import com.ffcc66.sxyj.activity.BookCategaryActivity;
 import com.ffcc66.sxyj.activity.BookListActivity;
@@ -40,6 +48,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.http.okhttp.request.RequestCall;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +77,8 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     LinearLayout llBookList;
     @BindView(R.id.lvNewBookRecommend)
     ListViewForScrollView lvNewBookRecommend;
+    @BindView(R.id.ibSearch)
+    ImageButton ibSearch;
 
     @BindView(R.id.ivPopularCover1)
     ImageView ivPopularCover1;
@@ -84,6 +95,8 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     TextView tvPopularName3;
     @BindView(R.id.bookstorerefersh)
     MaterialRefreshLayout bookstorerefersh;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private List image = new ArrayList();
     private List<Book> books = new ArrayList<>();
@@ -173,6 +186,7 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                 RequestData(true);
             }
         });
+        ibSearch.setOnClickListener(this);
 
     }
 
@@ -196,6 +210,8 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
             case R.id.llBookList:
                 startActivity(new Intent(getActivity(), BookListActivity.class));
                 break;
+            case R.id.ibSearch:
+                startActivity(new Intent(getContext(), SearchActivity.class));
 
         }
     }
@@ -211,11 +227,12 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                 .url("http://192.168.137.1:8080/SXYJApi/BookService/getPopularBook")
                 .addParams("num","3")
                 .build()
+                .connTimeOut(5000)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         LoadingDialogUtils.closeDialog(dialog2);
-                        Toast.makeText(getActivity(), "ERROR:请求数据失败...",
+                        Toast.makeText(getActivity(), "网络连接失败",
                                 Toast.LENGTH_LONG).show();
                         bookstorerefersh.finishRefresh();
                     }
@@ -265,11 +282,12 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
                 .url("http://192.168.137.1:8080/SXYJApi/BookService/getNewBook")
                 .addParams("num", "10")
                 .build()
+                .connTimeOut(5000)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         LoadingDialogUtils.closeDialog(dialog1);
-                        Toast.makeText(getActivity(), "ERROR:请求数据失败...",
+                        Toast.makeText(getActivity(), "网络连接失败",
                                 Toast.LENGTH_LONG).show();
                         bookstorerefersh.finishRefresh();
                     }

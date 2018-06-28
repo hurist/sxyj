@@ -86,11 +86,17 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
         Intent intent = getIntent();
+
         responseBook = (ResponseBook) intent.getSerializableExtra("bookinfo");
         ButterKnife.bind(this);
         initData();
         initListener();
 
+    }
+
+    private ResponseBook getBookinfo(int id) {
+
+        return null;
     }
 
     @Override
@@ -164,6 +170,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                         book.setBookpath(bookpath);
                         book.setCoverpath(responseBook.getCover_img());
                         book.setType(-1);
+                        book.setFileURL(responseBook.getFile());
                         book.save();
                     }
                     ReadActivity.openBook(book,BookDetailActivity.this);
@@ -189,6 +196,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                                     book.setWordcount(responseBook.getWordcount());
                                     book.setBookpath(bookpath);
                                     book.setCoverpath(responseBook.getCover_img());
+                                    book.setFileURL(responseBook.getFile());
                                     book.setType(1);
                                     book.save();
                                     addNum("collectionnum", responseBook.getId());
@@ -278,8 +286,19 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
                         if (entityResponse.getCode().equals("ok")) {
                             ResponseBook book = entityResponse.getObject();
+                            responseBook.setCover_img(book.getCover_img());
+                            responseBook.setWordcount(book.getWordcount());
+                            responseBook.setAuthor(book.getAuthor());
+                            responseBook.setIntroduction(book.getIntroduction());
+                            responseBook.setSearchnum(book.getSearchnum());
                             responseBook.setLooknum(book.getLooknum());
+                            responseBook.setType(book.getType());
                             responseBook.setCollectionnum(book.getCollectionnum());
+
+                            Picasso.get().load(responseBook.getCover_img()).placeholder(R.drawable.test).into(ivCover);
+                            tvIntroduction.setText(responseBook.getIntroduction());
+                            tvWordCount.setText(responseBook.getWordcount()+"");
+                            tvAuthorAndType.setText(responseBook.getAuthor()+"▪"+responseBook.getType());
                             tvLookNum.setText(""+responseBook.getLooknum());
                             tvCollectionNum.setText(""+responseBook.getCollectionnum());
                         }

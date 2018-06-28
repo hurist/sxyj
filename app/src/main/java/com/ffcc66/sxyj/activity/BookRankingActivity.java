@@ -96,7 +96,7 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
                 lvBookRanking.setSelection(0);
                 break;
             case R.id.rbSearch:
-                type = "collectionnum";
+                type = "searchnum";
                 bookRankingAdapter.setNumType("搜索数：");
                 initRankingData(type);
                 lvBookRanking.setSelection(0);
@@ -144,12 +144,13 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
                 .url("http://192.168.137.1:8080/SXYJApi/BookService/getBookRankListByType")
                 .addParams("type", type)
                 .build()
+                .connTimeOut(5000)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         Log.w("BookCategaryListActivit", "onError: ", e);
                         Toast.makeText(BookRankingActivity.this,
-                                "网络错误", Toast.LENGTH_SHORT);
+                                "网络错误", Toast.LENGTH_SHORT).show();
                         if (dialog != null) {
                             LoadingDialogUtils.closeDialog(dialog);
                         }

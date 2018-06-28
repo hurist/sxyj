@@ -36,7 +36,8 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,10 +45,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegisterActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".activity.BookDetailActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.BookDetailActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activity.BookCategaryActivity" />
         <activity android:name=".activity.BookRankingActivity" />
         <activity android:name=".activity.BookListActivity" />
@@ -59,7 +62,9 @@
         <activity android:name=".ReadActivity" />
         <activity android:name=".activity.MarkActivity" />
         <activity android:name=".activity.EditInformationActivity" />
-        <activity android:name=".activity.SecurityQuestionActivity"></activity>
+        <activity android:name=".activity.SecurityQuestionActivity" />
+        <activity android:name=".activity.SearchActivity"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

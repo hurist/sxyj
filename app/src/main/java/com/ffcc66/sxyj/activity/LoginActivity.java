@@ -149,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .url(url)
                 .params(loginparams)
                 .build()
+                .connTimeOut(5000)
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {

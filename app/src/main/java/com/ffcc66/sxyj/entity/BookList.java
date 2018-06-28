@@ -21,6 +21,7 @@ public class BookList extends DataSupport implements Serializable {
     private long lastreadtime;   //最后一次阅读的时间
     private String charset;     //文件编码
     private int type;
+    private String fileURL = "";
 
     public int getBookid() {
         return bookid;
@@ -116,5 +117,13 @@ public class BookList extends DataSupport implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getFileURL() {
+        return fileURL;
+    }
+
+    public void setFileURL(String fileURL) {
+        this.fileURL = fileURL;
     }
 }
