@@ -10,16 +10,8 @@ public class User implements Serializable {
     private String phone;
     private String headimg;
     private int sex;
+    private String sign;
 
-    public User(int id, String username, String password, String email, String phone,String headimg,int sex) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.headimg = headimg;
-        this.sex = sex;
-    }
 
     public User() {}
 
@@ -77,5 +69,13 @@ public class User implements Serializable {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.putString("phone",user.getPhone());
                     editor.putString("headimg",user.getHeadimg());
                     editor.putInt("sex",user.getSex());
+                    editor.putString("sign",user.getSign());
                     editor.commit();
                     Toast.makeText(LoginActivity.this,"用户："+msg.obj.toString()+"登录成功",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
