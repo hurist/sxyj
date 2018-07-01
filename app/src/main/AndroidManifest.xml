@@ -63,8 +63,11 @@
         <activity android:name=".activity.MarkActivity" />
         <activity android:name=".activity.EditInformationActivity" />
         <activity android:name=".activity.SecurityQuestionActivity" />
-        <activity android:name=".activity.SearchActivity"
-            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.BookCommendActivity" />
+        <activity android:name=".activity.AddBookCommendActivity"></activity>
     </application>
 
 </manifest>

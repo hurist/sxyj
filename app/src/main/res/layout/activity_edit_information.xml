@@ -57,6 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="15dp"
+                android:clickable="true"
                 android:src="@drawable/testhead" />
 
             <LinearLayout

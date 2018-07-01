@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.entity.Book;
+import com.ffcc66.sxyj.entity.Commend;
 import com.ffcc66.sxyj.entity.TempCommend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,21 +24,22 @@ import java.util.List;
 public class BookDetailCommendAdapter extends ArrayAdapter {
 
     private int resourceId;
-    public BookDetailCommendAdapter(Context context, int viewResouceId, List<TempCommend> tempCommendList) {
-        super(context,viewResouceId,tempCommendList);
+    private List<Commend> commendList = new ArrayList<>();
+    public BookDetailCommendAdapter(Context context, int viewResouceId, List<Commend> commends) {
+        super(context,viewResouceId,commends);
         this.resourceId = viewResouceId;
+        this.commendList = commends;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        TempCommend commend = (TempCommend) getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.ivHeadImg = view.findViewById(R.id.ivHeadImg);
+            viewHolder.tvTitle = view.findViewById(R.id.tvTitle);
             viewHolder.tvUsername = view.findViewById(R.id.tvUsername);
             viewHolder.tvCommend = view.findViewById(R.id.tvCommend);
             viewHolder.tvDate = view.findViewById(R.id.tvDate);
@@ -48,17 +51,17 @@ public class BookDetailCommendAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.ivHeadImg.setImageResource(commend.getHeadimg());
-        viewHolder.tvUsername.setText(commend.getUsername());
-        viewHolder.tvCommend.setText(commend.getCommend());
-        viewHolder.tvDate.setText(commend.getDate());
-        viewHolder.tvReplayNum.setText(commend.getNum());
+        viewHolder.tvTitle.setText(commendList.get(position).getTitle());
+        viewHolder.tvUsername.setText(commendList.get(position).getUsername());
+        viewHolder.tvCommend.setText(commendList.get(position).getCommend());
+        viewHolder.tvDate.setText(commendList.get(position).getAdddate());
+        viewHolder.tvReplayNum.setText("");
 
         return view;
     }
 
     class ViewHolder {
-        public ImageView ivHeadImg;
+        public TextView tvTitle;
         public TextView tvUsername;
         public TextView tvCommend;
         public TextView tvDate;

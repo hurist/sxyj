@@ -20,6 +20,7 @@ import com.ffcc66.sxyj.adapter.BookDetailCommendAdapter;
 import com.ffcc66.sxyj.dialog.DeleteDialog;
 import com.ffcc66.sxyj.entity.Book;
 import com.ffcc66.sxyj.entity.BookList;
+import com.ffcc66.sxyj.entity.Commend;
 import com.ffcc66.sxyj.entity.TempCommend;
 import com.ffcc66.sxyj.entity.User;
 import com.ffcc66.sxyj.response.EntityResponse;
@@ -75,7 +76,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
 
 
-    private List<TempCommend> tempCommends = new ArrayList<>();
+    private List<Commend> tempCommends = new ArrayList<>();
     private ResponseBook responseBook;
     private static final String TAG = "BookDetailActivity";
     private String bookpath;
@@ -134,12 +135,11 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
 
         for (int i=0; i<10; i++) {
-            TempCommend tempCommend = new TempCommend();
-            tempCommend.setHeadimg(R.drawable.testhead);
+            Commend tempCommend = new Commend();
+            tempCommend.setTitle("标题");
             tempCommend.setUsername("用户名"+i);
             tempCommend.setCommend("评论评论评论评论评论评论");
-            tempCommend.setDate("2018年01月1"+i+"日");
-            tempCommend.setNum(""+i);
+            tempCommend.setAdddate("2018年01月1"+i+"日");
             tempCommends.add(tempCommend);
         }
         BookDetailCommendAdapter bookDetailCommendAdapter = new BookDetailCommendAdapter(BookDetailActivity.this,R.layout.activity_book_detail_commend_item,tempCommends);
@@ -149,6 +149,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     protected void initListener() {
         llRead.setOnClickListener(this);
         llAddToBookcase.setOnClickListener(this);
+        llCommend.setOnClickListener(this);
     }
 
     @Override
@@ -218,6 +219,11 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                         tvAddToBookcase.setText("加入书架");
                     }
                 }
+                break;
+            case R.id.llCommend:
+                Intent intent = new Intent(BookDetailActivity.this, BookCommendActivity.class);
+                intent.putExtra("bookid",responseBook.getId());
+                startActivity(intent);
                 break;
         }
     }

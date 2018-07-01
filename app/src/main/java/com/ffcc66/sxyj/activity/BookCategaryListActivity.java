@@ -140,6 +140,7 @@ public class BookCategaryListActivity extends AppCompatActivity {
                             LoadingDialogUtils.closeDialog(dialog);
                         }
                         refersh.finishRefresh();
+                        refersh.finishRefreshLoadMore();
                     }
 
                     @Override

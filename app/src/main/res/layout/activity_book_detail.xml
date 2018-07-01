@@ -174,7 +174,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:etv_EnableToggle="true"
-                app:etv_MaxLinesOnShrink="2"
+                app:etv_MaxLinesOnShrink="5"
                 app:etv_ToExpandHint="显示"
                 app:etv_ToShrinkHint="隐藏" />
 
@@ -184,38 +184,6 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/lines_bottom_top">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:text="目录"
-                        android:textColor="@color/black"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="15dp"
-                        android:text="共9章  >"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -254,8 +222,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
             </com.ffcc66.sxyj.View.ListViewForScrollView>
 

@@ -2,18 +2,19 @@ package com.ffcc66.sxyj.entity;
 
 public class TempCommend {
 
-    private int headimg;
+    private String title;
     private String username;
     private String commend;
     private String date;
     private String num;
 
-    public int getHeadimg() {
-        return headimg;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setHeadimg(int headimg) {
-        this.headimg = headimg;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUsername() {
