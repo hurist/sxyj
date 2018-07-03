@@ -73,6 +73,13 @@ public class BookCategaryListActivity extends AppCompatActivity {
 
     private void initListener() {
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         refersh.setLoadMore(true);
         refersh.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override

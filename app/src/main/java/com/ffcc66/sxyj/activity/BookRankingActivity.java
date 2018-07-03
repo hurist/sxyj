@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.base.BaseActivity;
@@ -41,6 +42,9 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
     RadioGroup radioGroupRanking;
     @BindView(R.id.tvRankListEmpty)
     TextView tvRankListEmpty;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     private List<ResponseBook> books = new ArrayList<>();
     private BookRankingAdapter bookRankingAdapter;
     private String type = "collectionnum";
@@ -82,6 +86,13 @@ public class BookRankingActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
+            }
+        });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

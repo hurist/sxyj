@@ -102,7 +102,7 @@ public class BookRankingAdapter extends ArrayAdapter {
                     break;
                 case "搜索数：":
                     tvNumType.setText(type);
-                    tvNum.setText(""+responseBook.getCollectionnum());
+                    tvNum.setText(""+responseBook.getSearchnum());
                     break;
                 case "评论数：":
                     tvNumType.setText(type);

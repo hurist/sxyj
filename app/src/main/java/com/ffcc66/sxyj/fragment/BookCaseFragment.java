@@ -211,6 +211,8 @@ public class BookCaseFragment extends BaseFragment implements Toolbar.OnMenuItem
                 itemPosition = position;
 
                 bookCaseAdapter.setItemToFirst(itemPosition);
+                List<BookList> bookListsList = new ArrayList<>();
+                bookListsList = DataSupport.findAll(BookList.class);
                 final BookList bookList = booklist.get(itemPosition);   //获取当前点击书本的图书信息
                 bookList.setId(booklist.get(0).getId());   //将这本点击的书在书架中设置成第一本
                 final String path = bookList.getBookpath();   //获取图书路径

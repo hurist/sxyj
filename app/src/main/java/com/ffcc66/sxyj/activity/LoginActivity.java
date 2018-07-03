@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor.commit();
                     Toast.makeText(LoginActivity.this,"用户："+msg.obj.toString()+"登录成功",Toast.LENGTH_LONG).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                     break;
                 case 2:
                     LoadingDialogUtils.closeDialog(logindialog);
@@ -100,13 +101,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getSharedPreferences("userdata",Context.MODE_PRIVATE);
-
-        if (sharedPreferences.getString("username",null) != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initData();

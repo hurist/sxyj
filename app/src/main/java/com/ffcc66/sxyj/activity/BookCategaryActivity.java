@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 import com.ffcc66.sxyj.R;
 
@@ -20,6 +21,8 @@ public class BookCategaryActivity extends AppCompatActivity implements View.OnCl
     LinearLayout llForeignLiterature;
     @BindView(R.id.llXDDWX)
     LinearLayout llXDDWX;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,12 @@ public class BookCategaryActivity extends AppCompatActivity implements View.OnCl
 
         llXDDWX.setOnClickListener(this);
         llForeignLiterature.setOnClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 

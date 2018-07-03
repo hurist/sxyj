@@ -73,7 +73,7 @@ public class BookCaseAdapter extends ArrayAdapter {
 
         SimpleDateFormat sp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        if (bilist.get(position).getCoverpath() == null) {
+        if (bilist.get(position).getCoverpath().equals("")) {
             viewHolder.ivCover.setImageResource(R.drawable.test);
         } else {
             Picasso.get().load(bilist.get(position).getCoverpath()).placeholder(R.drawable.test).resize(60,80).centerCrop().into(viewHolder.ivCover);
@@ -161,9 +161,12 @@ public class BookCaseAdapter extends ArrayAdapter {
                 Collections.swap(bookLists1, i, i - 1);
                 updateBookPosition(i, dataBasesId, bookLists1);
             }
-
+            List<BookList> bookListsList = new ArrayList<>();
+            bookListsList = DataSupport.findAll(BookList.class);
             bookLists1.set(0, temp);
             updateBookPosition(0, tempId, bookLists1);
+            bookListsList = DataSupport.findAll(BookList.class);
+            Log.d(TAG, "setItemToFirst: ");
         }
     }
 
@@ -176,7 +179,7 @@ public class BookCaseAdapter extends ArrayAdapter {
      * @param databaseId  要更新的数据库的书本ID
      * @param bookList
      */
-    public void upDateBookToSqlite3(final int databaseId,final BookList bookList) {
+    public void  upDateBookToSqlite3(final int databaseId,final BookList bookList) {
 
         putAsyncTask(new AsyncTask<Void, Void, Boolean>() {
             @Override
@@ -187,7 +190,8 @@ public class BookCaseAdapter extends ArrayAdapter {
             @Override
             protected Boolean doInBackground(Void... params) {
                 try {
-                    bookList.update(databaseId);
+                  //  bookList.update(databaseId);
+                    bookList.updateAll("id = ?",""+databaseId);
                 } catch (DataSupportException e) {
                     return false;
                 }

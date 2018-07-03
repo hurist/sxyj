@@ -355,6 +355,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 String bookName = FileUtils.getFileName(item.thumb);
                 bookList.setBookname(bookName);
                 bookList.setBookpath(item.thumb);
+                bookList.setCoverpath("http://192.168.137.1:8080/images/test.jpg");
                 bookList.setType(0);
                 bookLists.add(bookList);
             }
@@ -624,6 +625,7 @@ public class DirectoryFragment extends Fragment implements View.OnClickListener 
                 String bookName = FileUtils.getFileName(path);
                 bookList.setBookname(bookName);
                 bookList.setBookpath(path);
+                bookList.setCoverpath("http://192.168.137.1:8080/images/test.jpg");
                 bookList.setType(0);
 
                 boolean isSave = false;

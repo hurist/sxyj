@@ -43,7 +43,7 @@ public class BookDetailCommendAdapter extends ArrayAdapter {
             viewHolder.tvUsername = view.findViewById(R.id.tvUsername);
             viewHolder.tvCommend = view.findViewById(R.id.tvCommend);
             viewHolder.tvDate = view.findViewById(R.id.tvDate);
-            viewHolder.tvReplayNum = view.findViewById(R.id.tvReplyNum);
+            viewHolder.tvLikeNum = view.findViewById(R.id.tvLikeNum);
             view.setTag(viewHolder);
 
         } else {
@@ -55,7 +55,7 @@ public class BookDetailCommendAdapter extends ArrayAdapter {
         viewHolder.tvUsername.setText(commendList.get(position).getUsername());
         viewHolder.tvCommend.setText(commendList.get(position).getCommend());
         viewHolder.tvDate.setText(commendList.get(position).getAdddate());
-        viewHolder.tvReplayNum.setText("");
+        viewHolder.tvLikeNum.setText(commendList.get(position).getLikenum()+"");
 
         return view;
     }
@@ -65,6 +65,6 @@ public class BookDetailCommendAdapter extends ArrayAdapter {
         public TextView tvUsername;
         public TextView tvCommend;
         public TextView tvDate;
-        public TextView tvReplayNum;
+        public TextView tvLikeNum;
     }
 }

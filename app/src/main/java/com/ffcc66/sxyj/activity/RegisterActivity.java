@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.ffcc66.sxyj.MainActivity;
 import com.ffcc66.sxyj.R;
@@ -51,29 +52,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText etPhone;
     @BindView(R.id.etEmail)
     EditText etEmail;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private String username,password,confirmpassword,phone,email;
     private String TAG = "222222222";
     private EditText[] editTexts = {etPassword,etConfirm,etPhone,etUsername,etPhone};
     static boolean acountIsExist = true;
-
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {      //接收其他子线程的消息
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-
-                    break;
-                case 1:
-
-                    break;
-            }
-        }
-    };
 
 
     @Override
@@ -93,6 +78,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etConfirm.setOnFocusChangeListener(this);
         etPhone.setOnFocusChangeListener(this);
         etEmail.setOnFocusChangeListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
     }
 

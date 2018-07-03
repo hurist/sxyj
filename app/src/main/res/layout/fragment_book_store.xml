@@ -136,34 +136,6 @@
                             android:layout_gravity="center_vertical"
                             android:background="@color/gray"/>
 
-                        <LinearLayout
-                            android:id="@+id/llBookList"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginTop="15dp"
-                                android:src="@drawable/ic_booklist" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginBottom="10dp"
-                                android:text="书单"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -186,16 +158,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:text="人气推荐"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="更多>"/>
 
                         </LinearLayout>
 
@@ -223,8 +185,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:paddingTop="10dp"
-                                    android:text="爱你就像爱自己" />
+                                    android:paddingTop="10dp" />
 
                             </LinearLayout>
 
@@ -246,8 +207,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:paddingTop="10dp"
-                                    android:text="爱你就像爱自己" />
+                                    android:paddingTop="10dp" />
 
                             </LinearLayout>
 
@@ -269,8 +229,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_horizontal"
-                                    android:paddingTop="10dp"
-                                    android:text="爱你就像爱自己" />
+                                    android:paddingTop="10dp" />
 
                             </LinearLayout>
 
@@ -301,16 +260,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:text="新书推荐"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="更多>"/>
 
                         </LinearLayout>
 

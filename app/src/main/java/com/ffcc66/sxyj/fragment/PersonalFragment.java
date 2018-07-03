@@ -1,13 +1,16 @@
 package com.ffcc66.sxyj.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.activity.EditInformationActivity;
@@ -41,6 +44,12 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     @BindView(R.id.llSetting)
     LinearLayout llSetting;
 
+    @BindView(R.id.tvUsername)
+    TextView tvUsername;
+    @BindView(R.id.tvSign)
+    TextView tvSign;
+
+    SharedPreferences sharedPreferences;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -54,7 +63,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData(View view) {
-
+        sharedPreferences = getActivity().getSharedPreferences("userdata", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -63,13 +72,18 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
-    @OnClick({R.id.llMyMessage, R.id.llMyBookList, R.id.llReadHistory,
-            R.id.llUserFeedback, R.id.llCheckUpdate, R.id.llSetSkin, R.id.llSetting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.circleimgHead:
                 getActivity().startActivity(new Intent(getContext(), EditInformationActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvUsername.setText(sharedPreferences.getString("username",""));
+        tvSign.setText(sharedPreferences.getString("sign",""));
     }
 }

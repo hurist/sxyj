@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.base.BaseActivity;
@@ -58,6 +59,8 @@ public class EditInformationActivity extends BaseActivity implements View.OnClic
     RadioButton rbWoman;
     @BindView(R.id.tvComplete)
     TextView tvComplete;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
     private View inflate;
@@ -119,6 +122,12 @@ public class EditInformationActivity extends BaseActivity implements View.OnClic
                 }
             }
         });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -128,7 +137,9 @@ public class EditInformationActivity extends BaseActivity implements View.OnClic
                 SharedPreferences.Editor editor = getSharedPreferences("userdata", Context.MODE_PRIVATE).edit();
                 editor.clear();
                 editor.commit();
-                startActivity(new Intent(EditInformationActivity.this, LoginActivity.class));
+                startActivity(new Intent(EditInformationActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                finish();
                 break;
             case R.id.tvComplete:
                 user.setSign(etSign.getText().toString());

@@ -73,8 +73,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
     LinearLayout llRanking;
     @BindView(R.id.llCategary)
     LinearLayout llCategary;
-    @BindView(R.id.llBookList)
-    LinearLayout llBookList;
     @BindView(R.id.lvNewBookRecommend)
     ListViewForScrollView lvNewBookRecommend;
     @BindView(R.id.ibSearch)
@@ -179,7 +177,6 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
         lvNewBookRecommend.setOnItemClickListener(this);
         llRanking.setOnClickListener(this);
         llCategary.setOnClickListener(this);
-        llBookList.setOnClickListener(this);
         bookstorerefersh.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -207,12 +204,9 @@ public class BookStoreFragment extends android.support.v4.app.Fragment implement
             case R.id.llCategary:
                 startActivity(new Intent(getActivity(), BookCategaryActivity.class));
                 break;
-            case R.id.llBookList:
-                startActivity(new Intent(getActivity(), BookListActivity.class));
-                break;
             case R.id.ibSearch:
                 startActivity(new Intent(getContext(), SearchActivity.class));
-
+                break;
         }
     }
 

@@ -19,6 +19,7 @@
             android:layout_height="70dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/my_luncher" />
 
         <TextView

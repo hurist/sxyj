@@ -11,17 +11,25 @@ import java.util.Date;
 public class BookList extends DataSupport implements Serializable {
     private int id;     //id，也是图书在书架中的位置
     private int bookid = 0;
-    private String coverpath;
-    private String bookname;    //图书名称
-    private String writer; //图书作者
-    private long wordcount;
-    private String bookpath;    //文件存储位置
-    private long begin;         //开始位置
+    private String coverpath = "";
+    private String bookname = "";    //图书名称
+    private String writer = ""; //图书作者
+    private long wordcount = 0;
+    private String bookpath = "";    //文件存储位置
+    private long begin = 0;         //开始位置
     private float readprocess = (float) 0;
-    private long lastreadtime;   //最后一次阅读的时间
-    private String charset;     //文件编码
-    private int type;
+    private long lastreadtime = 0;   //最后一次阅读的时间
+    private String charset = "";     //文件编码
+    private int type = 0;
     private String fileURL = "";
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getBookid() {
         return bookid;
@@ -29,6 +37,22 @@ public class BookList extends DataSupport implements Serializable {
 
     public void setBookid(int bookid) {
         this.bookid = bookid;
+    }
+
+    public String getCoverpath() {
+        return coverpath;
+    }
+
+    public void setCoverpath(String coverpath) {
+        this.coverpath = coverpath;
+    }
+
+    public String getBookname() {
+        return bookname;
+    }
+
+    public void setBookname(String bookname) {
+        this.bookname = bookname;
     }
 
     public String getWriter() {
@@ -47,28 +71,12 @@ public class BookList extends DataSupport implements Serializable {
         this.wordcount = wordcount;
     }
 
-    public String getBookname() {
-        return this.bookname;
-    }
-
-    public void setBookname(String bookname) {
-        this.bookname = bookname;
-    }
-
     public String getBookpath() {
-        return this.bookpath;
+        return bookpath;
     }
 
     public void setBookpath(String bookpath) {
         this.bookpath = bookpath;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public long getBegin() {
@@ -79,36 +87,28 @@ public class BookList extends DataSupport implements Serializable {
         this.begin = begin;
     }
 
-    public String getCharset() {
-        return charset;
-    }
-
-    public void setCharset(String charset) {
-        this.charset = charset;
-    }
-
-    public long getLastreadtime() {
-        return lastreadtime;
-    }
-
-    public void setLastreadtime(long lastestreadtime) {
-        this.lastreadtime = lastestreadtime;
-    }
-
-    public String getCoverpath() {
-        return coverpath;
-    }
-
-    public void setCoverpath(String coverpath) {
-        this.coverpath = coverpath;
-    }
-
     public float getReadprocess() {
         return readprocess;
     }
 
     public void setReadprocess(float readprocess) {
         this.readprocess = readprocess;
+    }
+
+    public long getLastreadtime() {
+        return lastreadtime;
+    }
+
+    public void setLastreadtime(long lastreadtime) {
+        this.lastreadtime = lastreadtime;
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
     }
 
     public int getType() {

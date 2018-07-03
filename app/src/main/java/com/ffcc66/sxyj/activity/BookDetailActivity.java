@@ -1,5 +1,6 @@
 package com.ffcc66.sxyj.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +9,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.ffcc66.sxyj.R;
 import com.ffcc66.sxyj.ReadActivity;
@@ -26,12 +29,16 @@ import com.ffcc66.sxyj.entity.User;
 import com.ffcc66.sxyj.response.EntityResponse;
 import com.ffcc66.sxyj.response.entity.ResponseBook;
 import com.ffcc66.sxyj.util.GsonUtil;
+import com.ffcc66.sxyj.util.LoadingDialogUtils;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.FileCallBack;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import java.io.File;
@@ -73,13 +80,18 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
     TextView tvRead;
     @BindView(R.id.tvAddToBookcase)
     TextView tvAddToBookcase;
+    @BindView(R.id.tvCommendEmpty)
+    TextView tvCommendEmpty;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
 
-    private List<Commend> tempCommends = new ArrayList<>();
+    private List<Commend> commends = new ArrayList<>();
     private ResponseBook responseBook;
     private static final String TAG = "BookDetailActivity";
     private String bookpath;
+    private BookDetailCommendAdapter bookDetailCommendAdapter;
 
 
     @Override
@@ -95,10 +107,6 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private ResponseBook getBookinfo(int id) {
-
-        return null;
-    }
 
     @Override
     protected void onResume() {
@@ -108,6 +116,7 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
         if (bookLists.size() > 0) {
             tvAddToBookcase.setText("取消收藏");
         }
+        getPopularCommends();
     }
 
     public void initData() {
@@ -133,23 +142,85 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
             tvAddToBookcase.setText("取消收藏");
         }
 
-
-        for (int i=0; i<10; i++) {
-            Commend tempCommend = new Commend();
-            tempCommend.setTitle("标题");
-            tempCommend.setUsername("用户名"+i);
-            tempCommend.setCommend("评论评论评论评论评论评论");
-            tempCommend.setAdddate("2018年01月1"+i+"日");
-            tempCommends.add(tempCommend);
-        }
-        BookDetailCommendAdapter bookDetailCommendAdapter = new BookDetailCommendAdapter(BookDetailActivity.this,R.layout.activity_book_detail_commend_item,tempCommends);
+        bookDetailCommendAdapter = new BookDetailCommendAdapter(BookDetailActivity.this,R.layout.activity_book_detail_commend_item,commends);
         lvBookCommend.setAdapter(bookDetailCommendAdapter);
+        lvBookCommend.setEmptyView(tvCommendEmpty);
+        getPopularCommends();
+    }
+
+    private void getPopularCommends() {
+        Log.d(TAG, "getPopularCommends: "+responseBook.getId());
+        final Dialog dialog = LoadingDialogUtils.createLoadingDialog(BookDetailActivity.this,"请稍等");
+        OkHttpUtils.get()
+                .url("http://192.168.137.1:8080/SXYJApi/BookService/getPopularCommend")
+                .addParams("bookid", ""+responseBook.getId())
+                .build()
+                .connTimeOut(5000)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        dialog.dismiss();
+                        Log.w("BookDetailActivity", "onError: ", e);
+                        Toast.makeText(BookDetailActivity.this,
+                                "网络错误", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject listresponse = new JSONObject(response);
+                            JSONArray commendArray = listresponse.getJSONArray("datas");
+                            List<Commend> templist = new ArrayList<>();
+                            if (commendArray != null) {
+                                commends.clear();
+                                for (int i=0; i<commendArray.length(); i++) {
+                                    JSONObject obj = (JSONObject) commendArray.get(i);
+                                    Commend commend = new Commend();
+                                    commend.setId(obj.getInt("id"));
+                                    commend.setUsername(obj.getString("username"));
+                                    commend.setBookid(obj.getInt("bookid"));
+                                    commend.setAdddate(obj.getString("adddate"));
+                                    commend.setTitle(obj.getString("title"));
+                                    commend.setCommend(obj.getString("commend"));
+                                    commend.setLikenum(obj.getInt("likenum"));
+                                    templist.add(commend);
+                                }
+                                commends.addAll(templist);
+                                bookDetailCommendAdapter.notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(BookDetailActivity.this,
+                                        "请求数据失败...", Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
     }
 
     protected void initListener() {
         llRead.setOnClickListener(this);
         llAddToBookcase.setOnClickListener(this);
         llCommend.setOnClickListener(this);
+        lvBookCommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Commend commend = (Commend) bookDetailCommendAdapter.getItem(i);
+                Intent intent = new Intent(BookDetailActivity.this, CommendDatailActivity.class);
+                intent.putExtra("commend",commend);
+                startActivity(intent);
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -222,16 +293,11 @@ public class BookDetailActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.llCommend:
                 Intent intent = new Intent(BookDetailActivity.this, BookCommendActivity.class);
+                Log.d(TAG, "onClick: "+responseBook.getId());
                 intent.putExtra("bookid",responseBook.getId());
                 startActivity(intent);
                 break;
         }
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
     }
 
     private void downloadingFile() {
